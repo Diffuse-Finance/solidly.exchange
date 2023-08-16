@@ -196,7 +196,7 @@ function Navigation(props) {
 
   const renderSubNav = (title, link) => {
     return (
-      <ToggleButton value={link} className={ classes.navButton } classes={{ selected: classes.testChange }}>
+      <ToggleButton disableRipple  value={link} className={ classes.navButton } classes={{ selected: classes.testChange }} >
         <Typography variant="h2" className={ classes.subtitleText}>{title}</Typography>
       </ToggleButton>
     );
