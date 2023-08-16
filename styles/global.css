@@ -13,3 +13,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 button {
   text-transform: none !important;
 }
+
+:root{
+  --diffuse-violet-active : #A89FCA;
+
+  --diffuse-grey-text : #E3E4E7;
+
+  --diffuse-black : #0F1011;
+  
+  --diffuse-light-black:#16171A;
+}

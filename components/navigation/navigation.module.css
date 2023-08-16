@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: rgb(33, 43, 72);
+  background-color: transparent;
   border-radius: 12px;
   border: 0 !important;
   padding: 3px;
@@ -188,8 +188,14 @@ a.linkz { cursor: pointer !important; }
 }
 
 .subtitleText {
-  font-size: 14px !important;
   margin: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 16px!important;
+  font-weight: 500!important;
+  line-height: 100%;
+  letter-spacing: -0.16px;
+  text-transform: uppercase;
+
 }
 
 .sectionDivider {
@@ -303,14 +309,26 @@ a.linkz { cursor: pointer !important; }
   padding: 8px 24px 10px 24px !important;
   text-transform: capitalize !important;
   border: 1px solid rgba(0,0,0,0) !important;
-  color: #7E99B0 !important;
+  color: var(--diffuse-grey-text);
+  
 } /* Transparent border to eliminate position jittering from Active state */
+.navButton:hover{
+  background: transparent!important;
+  color: var(--diffuse-violet-active) !important;
+}
 
 .testChange {
-  border: 1px solid #06d3d7 !important;
   background-color: rgba(0,0,0,0) !important;
-  color: #FFF !important;
+  color: var(--diffuse-violet-active) !important;
+  position: relative;
 }
+
+.testChange::after{
+  position: absolute;
+  content: "•";
+  font-size: 19px;
+  top: 28px;
+} 
 
 @media screen and (max-width: 1200px) {
   .navigationContainer {
@@ -323,7 +341,7 @@ a.linkz { cursor: pointer !important; }
     padding: 15px 0px !important;
     border-radius: 0px !important;
     z-index: 10020;
-    background: #111729;
+    background: transparent
   }
   .socials {
     display: none;

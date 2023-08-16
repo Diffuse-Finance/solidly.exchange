@@ -52,7 +52,7 @@
 
 .version {
   position: absolute;
-  top: 12px;
+  top: 19px;
   left: 10px;
   color: #fff !important;
   font-size: 10px !important;
@@ -120,6 +120,7 @@
   margin-left: 14px !important;
   min-height: 50px;
   background-color: rgb(33, 43, 72) !important;
+  background-color: var(--diffuse-light-black) !important;
   border: 0 !important;
   border-radius: 40px !important;
   color: rgba(255, 255, 255, 0.87) !important;
