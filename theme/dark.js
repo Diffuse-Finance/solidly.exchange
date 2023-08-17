@@ -8,14 +8,14 @@ const theme = createTheme({
     ...coreTheme.palette,
     background: {
       default: "#131929",
-      paper: "rgb(25, 33, 56)"
+      paper: "#16171A"
     },
     primary: {
-      main: "#06d3d7"
+      main: "#a89fca"
     },
     text: {
       primary: "rgba(255, 255, 255, 0.87)",
-      secondary: "#7E99B0",
+      secondary: "#0F1011",
     },
     type: "dark"
   },

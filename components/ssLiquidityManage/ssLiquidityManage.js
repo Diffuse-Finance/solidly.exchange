@@ -747,6 +747,14 @@ export default function ssLiquidityManage() {
     callQuoteRemoveLiquidity(pear, amount)
   }
 
+  const ArrowSelect = ({active}) => {
+    return (
+      <svg width="8" height="17" viewBox="0 0 8 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.75 4.41667L6.58333 5.60417L4.83333 3.85417L4.83333 16.5L3.16667 16.5L3.16667 3.85417L1.41667 5.58333L0.25 4.39583L4 0.666668L7.75 4.41667Z" fill={active ? "#A89FCA" : "#E3E4E7"}/>
+      </svg>
+    )
+  }
+
   const renderMediumInput = (type, value, logo, symbol) => {
     return (
       <div className={ classes.textField}>
@@ -830,9 +838,6 @@ export default function ssLiquidityManage() {
           </div>
         </div>
         <div className={ `${classes.massiveInputContainer} ${ (amountError || assetError) && classes.error }` }>
-          <div className={ classes.massiveInputAssetSelect }>
-            <AssetSelect type={type} value={ assetValue } assetOptions={ assetOptions } onSelect={ onAssetSelect } disabled={ pairReadOnly } />
-          </div>
           <div className={ classes.massiveInputAmount }>
             <TextField
               inputRef={inputRef}
@@ -849,6 +854,9 @@ export default function ssLiquidityManage() {
               }}
             />
             <Typography color='textSecondary' className={ classes.smallerText }>{ assetValue?.symbol }</Typography>
+          </div>
+          <div className={ classes.massiveInputAssetSelect }>
+            <AssetSelect type={type} value={ assetValue } assetOptions={ assetOptions } onSelect={ onAssetSelect } disabled={ pairReadOnly } />
           </div>
         </div>
       </div>
@@ -975,11 +983,26 @@ export default function ssLiquidityManage() {
         <div className={ classes.mediumInputContainer}>
           <div className={ classes.toggles }>
             <div className={ `${classes.toggleOption} ${stable && classes.active}` } onClick={ () => { setStab(true) } }>
-              <Typography className={ classes.toggleOptionText }>Stable</Typography>
+              <Typography className={ classes.toggleOptionText }>STABLE</Typography>
             </div>
             <div className={ `${classes.toggleOption} ${!stable && classes.active}` } onClick={ () => { setStab(false) } }>
-              <Typography className={ classes.toggleOptionText }>Volatile</Typography>
+              <Typography className={ classes.toggleOptionText }>VOLATILE</Typography>
             </div>
+          </div>
+          <div className={ classes.advancedToggleContainer }>
+            <FormControlLabel
+              control={
+                <Switch
+                  size="small"
+                  checked={ advanced }
+                  onChange={ toggleAdvanced }
+                  color={ 'primary' }
+                />
+              }
+              className={ classes.some }
+              label="ADVANCED"
+              labelPlacement="start"
+            />
           </div>
         </div>
       </div>
@@ -1027,40 +1050,51 @@ export default function ssLiquidityManage() {
     <div className={classes.retain}>
       <Paper elevation={0} className={ classes.container }>
         <div className={classes.toggleButtons}>
-          <Grid container spacing={0}>
+          <Tooltip title="Back to Liquidity" placement="top">
+            <IconButton className={ classes.backButton } onClick={ onBack }>
+            <ArrowBackIcon className={ classes.backIcon } />
+            </IconButton>
+          </Tooltip>
+          <Grid container spacing={0} style={{width: '50%'}}>
             <Grid item lg={6} md={6} sm={6} xs={6}>
-              <Paper className={ `${activeTab === 'deposit' ? classes.buttonActive : classes.button} ${ classes.topLeftButton }` } onClick={ toggleDeposit } disabled={ depositLoading }>
-                <Typography variant='h5'>Deposit</Typography>
-                <div className={ `${activeTab === 'deposit' ? classes.activeIcon : ''}` }></div>
-              </Paper>
+            <Paper className={ `${activeTab === 'deposit' ? classes.buttonActive : classes.button} ${ classes.topLeftButton }` } onClick={ toggleDeposit } disabled={ depositLoading }>
+              <div style={{transform: 'rotate(180deg)', marginRight: '5px'}}>
+                <ArrowSelect active={activeTab === 'deposit'} />
+              </div>
+              <Typography variant='h5' className='jetBrains'>DEPOSIT</Typography>
+              <div className={ `${activeTab === 'withdraw' ? classes.activeIcon : ''}` }></div>
+            </Paper>
             </Grid>
             <Grid item lg={6} md={6} sm={6} xs={6}>
               <Paper className={ `${activeTab === 'withdraw' ? classes.buttonActive : classes.button}  ${ classes.bottomLeftButton }` } onClick={ toggleWithdraw } disabled={ depositLoading }>
-                <Typography variant='h5'>Withdraw</Typography>
+                <div style={{marginRight: '5px'}}>
+                  <ArrowSelect active={activeTab === 'withdraw'} />
+                </div>
+                <Typography variant='h5' className='jetBrains'>WITHDRAW</Typography>
                 <div className={ `${activeTab === 'withdraw' ? classes.activeIcon : ''}` }></div>
               </Paper>
             </Grid>
           </Grid>
         </div>
-        <div className={ classes.titleSection }>
+        {/* <div className={ classes.titleSection }>
           <Tooltip title="Back to Liquidity" placement="top">
           <IconButton className={ classes.backButton } onClick={ onBack }>
             <ArrowBackIcon className={ classes.backIcon } />
           </IconButton>
           </Tooltip>
           <Typography className={ classes.titleText }>Manage Liquidity Pair</Typography>
-        </div>
+        </div> */}
         <div className={ classes.reAddPadding }>
           <div className={ classes.inputsContainer }>
             {
               activeTab === 'deposit' &&
               <>
                 { renderMassiveInput('amount0', amount0, amount0Error, amount0Changed, asset0, null, assetOptions, onAssetSelect, amount0Focused, amount0Ref) }
-                <div className={ classes.swapIconContainer }>
+                {/* <div className={ classes.swapIconContainer }>
                   <div className={ classes.swapIconSubContainer }>
                     <AddIcon className={ classes.swapIcon } />
                   </div>
-                </div>
+                </div> */}
                 { renderMassiveInput('amount1', amount1, amount1Error, amount1Changed, asset1, null, assetOptions, onAssetSelect, amount1Focused, amount1Ref) }
                 { renderMediumInputToggle('stable', stable) }
                 { renderTokenSelect() }
@@ -1071,11 +1105,11 @@ export default function ssLiquidityManage() {
               activeTab === 'withdraw' &&
               <>
                 { renderMassiveInput('withdraw', withdrawAmount, withdrawAmountError, withdrawAmountChanged, withdrawAsset, null, withdrawAassetOptions, onAssetSelect, null, null) }
-                <div className={ classes.swapIconContainer }>
+                {/* <div className={ classes.swapIconContainer }>
                   <div className={ classes.swapIconSubContainer }>
                     <ArrowDownwardIcon className={ classes.swapIcon } />
                   </div>
-                </div>
+                </div> */}
                 <div className={ classes.receiveAssets }>
                   { renderMediumInput('withdrawAmount0', withdrawAmount0, pair?.token0?.logoURI, pair?.token0?.symbol) }
                   { renderMediumInput('withdrawAmount1', withdrawAmount1, pair?.token1?.logoURI, pair?.token1?.symbol) }
@@ -1083,21 +1117,6 @@ export default function ssLiquidityManage() {
                 { renderWithdrawInformation() }
               </>
             }
-          </div>
-          <div className={ classes.advancedToggleContainer }>
-            <FormControlLabel
-              control={
-                <Switch
-                  size="small"
-                  checked={ advanced }
-                  onChange={ toggleAdvanced }
-                  color={ 'primary' }
-                />
-              }
-              className={ classes.some }
-              label="Advanced"
-              labelPlacement="start"
-            />
           </div>
           {
             activeTab === 'deposit' &&
@@ -1515,6 +1534,7 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
               height='100px'
               onError={(e)=>{e.target.onerror = null; e.target.src="/tokens/unknown-logo.png"}}
             />
+            {value?.symbol && <Typography>{ value?.symbol }</Typography>}
           </div>
         </div>
       </div>
