@@ -7,7 +7,6 @@ import classes from './ssLiquidityManage.module.css'
 
 import AddIcon from '@material-ui/icons/Add'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import SearchIcon from '@material-ui/icons/Search'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
 
@@ -809,22 +808,23 @@ export default function ssLiquidityManage() {
       <div className={ classes.textField}>
         <div className={ classes.inputTitleContainer }>
           <div className={ classes.inputBalance }>
-            { type !== 'withdraw' &&
+            { type !== 'withdraw' && assetValue &&
               <Typography className={ classes.inputBalanceText } noWrap onClick={ () => {
                 setAmountPercent(type, 100)
               }}>
-                Balance:
+                You have
                 { (assetValue && assetValue.balance) ?
                   ' ' + formatCurrency(assetValue.balance) :
                   ''
                 }
+                { assetValue?.symbol}
               </Typography>
             }
-            { type === 'withdraw' &&
+            { type === 'withdraw' && assetValue &&
               <Typography className={ classes.inputBalanceText } noWrap onClick={ () => {
                 setAmountPercent(type, 100)
               }}>
-                Balance:
+                You have
                 {  (assetValue && assetValue.gauge && assetValue.gauge.balance) ?
                     (' ' + formatCurrency(assetValue.gauge.balance)) :
                     (
@@ -833,6 +833,7 @@ export default function ssLiquidityManage() {
                       '0.00'
                     )
                 }
+                { assetValue.symbol}
               </Typography>
             }
           </div>
@@ -853,7 +854,7 @@ export default function ssLiquidityManage() {
                 className: classes.largeInput
               }}
             />
-            <Typography color='textSecondary' className={ classes.smallerText }>{ assetValue?.symbol }</Typography>
+            <Typography color='textSecondary' className={ classes.smallerText }>{ '$0.00' }</Typography>
           </div>
           <div className={ classes.massiveInputAssetSelect }>
             <AssetSelect type={type} value={ assetValue } assetOptions={ assetOptions } onSelect={ onAssetSelect } disabled={ pairReadOnly } />
@@ -867,8 +868,8 @@ export default function ssLiquidityManage() {
     if(!pair) {
       return (
         <div className={ classes.depositInfoContainer }>
-          <Typography className={ classes.depositInfoHeading } >Starting Liquidity Info</Typography>
           <div className={ classes.createPriceInfos}>
+          <Typography className={ classes.depositInfoHeading } >Starting Liquidity Info</Typography>
             <div className={ classes.priceInfo }>
               <Typography className={ classes.title } >{ BigNumber(amount1).gt(0) ? formatCurrency(BigNumber(amount0).div(amount1)) : '0.00' }</Typography>
               <Typography className={ classes.text } >{ `${asset0?.symbol} per ${asset1?.symbol}` }</Typography>
@@ -883,8 +884,9 @@ export default function ssLiquidityManage() {
     } else {
       return (
         <div className={ classes.depositInfoContainer }>
-          <Typography className={ classes.depositInfoHeading } >Reserve Info</Typography>
+          
           <div className={ classes.priceInfos}>
+          <Typography className={ classes.depositInfoHeading } >Reserve Info</Typography>
             <div className={ classes.priceInfo }>
               <Typography className={ classes.title } >{ formatCurrency(pair?.reserve0) }</Typography>
               <Typography className={ classes.text } >{ `${pair?.token0?.symbol}` }</Typography>
@@ -897,8 +899,8 @@ export default function ssLiquidityManage() {
               { renderSmallInput('slippage', slippage, slippageError, onSlippageChanged) }
             </div>
           </div>
-          <Typography className={ classes.depositInfoHeading } >Your Balances</Typography>
           <div className={ classes.createPriceInfos}>
+          <Typography className={ classes.depositInfoHeading } >Your Balances</Typography>
             <div className={ classes.priceInfo }>
               <Typography className={ classes.title } >{ formatCurrency(pair?.balance) }</Typography>
               <Typography className={ classes.text } >{ `Pooled ${pair?.symbol}` }</Typography>
@@ -916,8 +918,8 @@ export default function ssLiquidityManage() {
   const renderWithdrawInformation = () => {
     return (
       <div className={ classes.withdrawInfoContainer }>
-        <Typography className={ classes.depositInfoHeading } >Reserve Info</Typography>
         <div className={ classes.priceInfos}>
+        <Typography className={ classes.depositInfoHeading } >Reserve Info</Typography>
           <div className={ classes.priceInfo }>
             <Typography className={ classes.title } >{ formatCurrency(pair?.reserve0) }</Typography>
             <Typography className={ classes.text } >{ `${pair?.token0?.symbol}` }</Typography>
@@ -930,8 +932,8 @@ export default function ssLiquidityManage() {
             { renderSmallInput('slippage', slippage, slippageError, onSlippageChanged) }
           </div>
         </div>
-        <Typography className={ classes.depositInfoHeading } >Your Balances</Typography>
         <div className={ classes.createPriceInfos}>
+        <Typography className={ classes.depositInfoHeading } >Your Balances</Typography>
           <div className={ classes.priceInfo }>
             <Typography className={ classes.title } >{ formatCurrency(pair?.balance) }</Typography>
             <Typography className={ classes.text } >{ `Pooled ${pair?.symbol}` }</Typography>
@@ -951,11 +953,7 @@ export default function ssLiquidityManage() {
   const renderSmallInput = (type, amountValue, amountError, amountChanged) => {
     return (
       <div className={ classes.textField}>
-        <div className={ classes.inputTitleContainerSlippage }>
-          <div className={ classes.inputBalanceSlippage }>
-            <Typography className={ classes.inputBalanceText } noWrap > Slippage </Typography>
-          </div>
-        </div>
+        
         <div className={ classes.smallInputContainer }>
           <TextField
             placeholder='0.00'
@@ -973,7 +971,18 @@ export default function ssLiquidityManage() {
             }}
           />
         </div>
+        <div className={ classes.inputTitleContainerSlippage }>
+          <div className={ classes.inputBalanceSlippage }>
+            <Typography className={ classes.inputBalanceText } noWrap > Slippage </Typography>
+          </div>
+        </div>
       </div>
+    )
+  }
+
+  const ActiveDot = () => {
+    return (
+      <div className={ classes.activeDot }></div>
     )
   }
 
@@ -984,9 +993,11 @@ export default function ssLiquidityManage() {
           <div className={ classes.toggles }>
             <div className={ `${classes.toggleOption} ${stable && classes.active}` } onClick={ () => { setStab(true) } }>
               <Typography className={ classes.toggleOptionText }>STABLE</Typography>
+              { stable && <ActiveDot />}
             </div>
             <div className={ `${classes.toggleOption} ${!stable && classes.active}` } onClick={ () => { setStab(false) } }>
               <Typography className={ classes.toggleOptionText }>VOLATILE</Typography>
+              { !stable && <ActiveDot />}
             </div>
           </div>
           <div className={ classes.advancedToggleContainer }>
@@ -1046,6 +1057,20 @@ export default function ssLiquidityManage() {
     setAdvanced(!advanced)
   }
 
+  const ActiveBar = () => {
+    return (
+      <div className={ classes.activeBar }></div>
+    )
+  }
+
+  const ArrowBackIcon = () => {
+    return (
+      <svg width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.41667 0.249999L5.60417 1.41667L3.85417 3.16667L16.5 3.16667L16.5 4.83333L3.85417 4.83333L5.58333 6.58333L4.39583 7.75L0.666668 4L4.41667 0.249999Z" fill="#FFFDFF"/>
+      </svg>
+    )
+  }
+
   return (
     <div className={classes.retain}>
       <Paper elevation={0} className={ classes.container }>
@@ -1055,22 +1080,24 @@ export default function ssLiquidityManage() {
             <ArrowBackIcon className={ classes.backIcon } />
             </IconButton>
           </Tooltip>
-          <Grid container spacing={0} style={{width: '50%'}}>
+          <Grid container spacing={0} style={{width: '50%', borderBottom: '1px solid #222328'}}>
             <Grid item lg={6} md={6} sm={6} xs={6}>
             <Paper className={ `${activeTab === 'deposit' ? classes.buttonActive : classes.button} ${ classes.topLeftButton }` } onClick={ toggleDeposit } disabled={ depositLoading }>
+              {activeTab === 'deposit' && <ActiveBar />}
               <div style={{transform: 'rotate(180deg)', marginRight: '5px'}}>
                 <ArrowSelect active={activeTab === 'deposit'} />
               </div>
-              <Typography variant='h5' className='jetBrains'>DEPOSIT</Typography>
+              <Typography variant='h5' className={classes.jetBrains}>DEPOSIT</Typography>
               <div className={ `${activeTab === 'withdraw' ? classes.activeIcon : ''}` }></div>
             </Paper>
             </Grid>
             <Grid item lg={6} md={6} sm={6} xs={6}>
               <Paper className={ `${activeTab === 'withdraw' ? classes.buttonActive : classes.button}  ${ classes.bottomLeftButton }` } onClick={ toggleWithdraw } disabled={ depositLoading }>
+              {activeTab === 'withdraw' && <ActiveBar />}
                 <div style={{marginRight: '5px'}}>
                   <ArrowSelect active={activeTab === 'withdraw'} />
                 </div>
-                <Typography variant='h5' className='jetBrains'>WITHDRAW</Typography>
+                <Typography variant='h5' className={classes.jetBrains}>WITHDRAW</Typography>
                 <div className={ `${activeTab === 'withdraw' ? classes.activeIcon : ''}` }></div>
               </Paper>
             </Grid>
@@ -1097,7 +1124,7 @@ export default function ssLiquidityManage() {
                 </div> */}
                 { renderMassiveInput('amount1', amount1, amount1Error, amount1Changed, asset1, null, assetOptions, onAssetSelect, amount1Focused, amount1Ref) }
                 { renderMediumInputToggle('stable', stable) }
-                { renderTokenSelect() }
+                {/* { renderTokenSelect() } */}
                 { renderDepositInformation() }
               </>
             }
@@ -1398,7 +1425,7 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
         </div>
         <div className={ classes.assetSelectIconName }>
           <Typography variant='h5'>{ asset ? asset.symbol : '' }</Typography>
-          <Typography variant='subtitle1' color='textSecondary'>{ asset ? asset.name : '' }</Typography>
+          <Typography variant='subtitle1' color='#fff'>{ asset ? asset.name : '' }</Typography>
         </div>
         <div className={ classes.assetSelectActions}>
           <IconButton onClick={ () => { deleteOption(asset) } }>
@@ -1526,7 +1553,7 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
     <React.Fragment>
       <div className={ classes.displaySelectContainer } onClick={ () => { openSearch() } }>
         <div className={ classes.assetSelectMenuItem }>
-          <div className={ classes.displayDualIconContainer }>
+          <div style={{marginTop: '15px'}} className={ classes.displayDualIconContainer }>
             <img
               className={ classes.displayAssetIcon }
               alt=""
