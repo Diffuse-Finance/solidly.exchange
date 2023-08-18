@@ -8,6 +8,7 @@ import {
   IconButton,
   Dialog,
   CircularProgress,
+  SvgIcon,
   Tooltip
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -381,43 +382,59 @@ function Setup() {
 
     return (
       <div className={ classes.textField}>
-        <div className={ classes.inputTitleContainer }>
-          <div className={ classes.inputBalance }>
-            <Typography className={ classes.inputBalanceText } noWrap onClick={ () => {
-              if(type === 'From') {
-                setBalance100()
-              }
-            }}>
-              Balance:
-              { (assetValue && assetValue.balance) ?
-                ' ' +   formatCurrency(assetValue.balance) :
-                ''
-              }
-            </Typography>
+          <div className={ classes.inputTitleContainer }>
+            {/* <div className={ classes.inputBalance }>
+              <Typography className={ classes.inputBalanceText } noWrap onClick={ () => {
+                if(type === 'From') {
+                  setBalance100()
+                }
+              }}>
+                Balance:
+                { (assetValue && assetValue.balance) ?
+                  ' ' +   formatCurrency(assetValue.balance) :
+                  ''
+                }
+              </Typography>
+            </div> */}
           </div>
-        </div>
-        <div className={ `${classes.massiveInputContainer} ${ (amountError || assetError) && classes.error }` }>
-          <div className={ classes.massiveInputAssetSelect }>
-            <AssetSelect type={type} value={ assetValue } assetOptions={ assetOptions } onSelect={ onAssetSelect } />
-          </div>
-          <div className={ classes.massiveInputAmount }>
-            <TextField
-              placeholder='0.00'
-              fullWidth
-              error={ amountError }
-              helperText={ amountError }
-              value={ amountValue }
-              onChange={ amountChanged }
-              disabled={ loading || type === 'To' }
-              InputProps={{
-                className: classes.largeInput
-              }}
-            />
+          <div className={ `${classes.massiveInputContainer} ${ (amountError || assetError) && classes.error }` }>
+              <div className={ classes.inputContainer } >
+                  <div className={ classes.massiveInputAmount }>
+                    <TextField
+                      placeholder='0.00'
+                      fullWidth
+                      error={ amountError }
+                      helperText={ amountError }
+                      value={ amountValue }
+                      onChange={ amountChanged }
+                      disabled={ loading || type === 'To' }
+                      InputProps={{
+                        inputMode: 'numeric', 
+                        className: classes.largeInput
+                      }}
+                    />
 
-            <Typography color='textSecondary' className={ classes.smallerText }>{ assetValue?.symbol }</Typography>
+                    <Typography color='textSecondary' className={ classes.smallerText }>{ assetValue?.symbol }</Typography>
+                  </div>
 
+                  <div className={classes.inputsButtons} >
+                    <div>
+                        <div className={classes.buttonGreyMax}>
+                          <p className={classes.max}>MAX</p>
+                        </div>
+                    </div>
+                    <div>
+                      <div className={classes.buttonGreyCoinIcon}>
+                        <AssetSelect type={type} value={ assetValue } assetOptions={ assetOptions } onSelect={ onAssetSelect } />
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div className={ classes.balanceInput }>
+                <p className={ classes.smallerText}>$100.34</p>
+                <p className={ classes.smallerText}>You have 76.18 ETH</p>
+              </div>
           </div>
-        </div>
       </div>
     )
   }
@@ -427,7 +444,9 @@ function Setup() {
       { renderMassiveInput('From', fromAmountValue, fromAmountError, fromAmountChanged, fromAssetValue, fromAssetError, fromAssetOptions, onAssetSelect) }
       <div className={ classes.swapIconContainer }>
         <div className={ classes.swapIconSubContainer }>
-          <ArrowDownwardIcon className={ classes.swapIcon } onClick={ swapAssets }/>
+          <SvgIcon className={ classes.swapIcon } onClick={ swapAssets } xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M6.25 14.5833L7.41667 13.3958L9.16667 15.1458L9.16667 2.5L10.8333 2.5L10.8333 15.1458L12.5833 13.4167L13.75 14.6042L10 18.3333L6.25 14.5833Z" fill="#E3E4E7"/>
+          </SvgIcon>
         </div>
       </div>
       { renderMassiveInput('To', toAmountValue, toAmountError, toAmountChanged, toAssetValue, toAssetError, toAssetOptions, onAssetSelect) }
@@ -441,7 +460,7 @@ function Setup() {
           disabled={ loading || quoteLoading }
           onClick={ onSwap }
           >
-          <Typography className={ classes.actionButtonText }>{ loading ? `Swapping` : `Swap` }</Typography>
+          <Typography className={ classes.actionButtonText }>{ loading ? `SWAPPING` : `SWAP` }</Typography>
           { loading && <CircularProgress size={10} className={ classes.loadingCircle } /> }
         </Button>
       </div>
@@ -524,7 +543,6 @@ function AssetSelect({ type, value, assetOptions, onSelect }) {
               className={ classes.displayAssetIconSmall }
               alt=""
               src={ asset ? `${asset.logoURI}` : '' }
-              height='60px'
               onError={(e)=>{e.target.onerror = null; e.target.src="/tokens/unknown-logo.png"}}
             />
           </div>
@@ -658,17 +676,13 @@ function AssetSelect({ type, value, assetOptions, onSelect }) {
   return (
     <React.Fragment>
       <div className={ classes.displaySelectContainer } onClick={ () => { openSearch() } }>
-        <div className={ classes.assetSelectMenuItem }>
-          <div className={ classes.displayDualIconContainer }>
             <img
               className={ classes.displayAssetIcon }
               alt=""
               src={ value ? `${value.logoURI}` : '' }
-              height='100px'
               onError={(e)=>{e.target.onerror = null; e.target.src="/tokens/unknown-logo.png"}}
             />
-          </div>
-        </div>
+            <p className={classes.max}>WETH</p>
       </div>
       <Dialog onClose={ onClose } aria-labelledby="simple-dialog-title" open={ open } >
         { !manageLocal && renderOptions() }

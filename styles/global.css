@@ -17,7 +17,11 @@ button {
 :root{
   --diffuse-violet-active : #A89FCA;
 
-  --diffuse-grey-text : #E3E4E7;
+  --diffuse-violet-hover : #BBB4D6;
+
+  --diffuse-white-text: #E3E4E7;
+
+  --diffuse-text-grey : #7E818D ;
 
   --diffuse-black : #0F1011;
   

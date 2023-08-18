@@ -309,7 +309,7 @@ a.linkz { cursor: pointer !important; }
   padding: 8px 24px 10px 24px !important;
   text-transform: capitalize !important;
   border: 1px solid rgba(0,0,0,0) !important;
-  color: var(--diffuse-grey-text);
+  color: var(--diffuse-white-text)!important;
   
 } /* Transparent border to eliminate position jittering from Active state */
 .navButton:hover{

@@ -11,23 +11,26 @@
 .swapContainer {
   max-width: 485px;
   width: 100%;
-  padding: 24px;
   display: flex;
   flex-direction: column;
   -webkit-box-shadow: 0 13px 30px 0 rgba(7,9,18,0.1) !important;
   box-shadow: 0 13px 30px 0 rgba(7,9,18,0.1) !important;
+  background-color: #222328;
 }
 
 .smallerText {
-  font-size: 12px !important;
+  font-size: 13px !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
+  color:var(--diffuse-text-grey);
 }
 
 .swapInputs {
   display: flex;
   flex-direction: column;
   width: 100%;
+  background-color: #16171a;
+
 }
 
 .smallInputContainer {
@@ -48,7 +51,21 @@
   border-radius: 10px;
   width: 100%;
   align-items: center;
-  background: rgb(33, 43, 72);
+  padding: 30px;
+}
+
+.inputContainer{
+  display: flex;
+  align-items: center;
+  gap: 19px;
+}
+
+.balanceInput{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .error {
@@ -76,9 +93,11 @@
 }
 
 .displaySelectContainer {
-  padding: 12px;
-  min-height: 100px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 80px;
+  gap: 5px;
 }
 
 .displayDualIconContainer {
@@ -136,12 +155,7 @@
 }
 
 .displayAssetIcon {
-  border: 1px solid rgba(126, 153, 176, 0.2);
-  border-radius: 50px;
-  background: rgb(33, 43, 72);
-  width: 100px;
-  height: 100px;
-  padding: 10px;
+  height: 31px;
 }
 
 .displayAssetIconSmall {
@@ -219,6 +233,53 @@
 
 .largeInput {
   font-size: 40px !important;
+  color: var(--diffuse-white-text)!important;
+  font-family: IBM Plex Sans !important;
+  font-size: 32px!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  line-height: 100%!important; /* 32px */
+}
+
+.inputsButtons{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.buttonGreyMax{
+  border-radius: 30px;
+  padding: 14px 20px;
+  background: #222328;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none; 
+  -moz-user-select: none;
+  -webkit-text-select: none;
+  -webkit-user-select: none;
+}
+
+.buttonGreyCoinIcon{
+  border-radius: 30px;
+  padding: 10px 18px 10px 10px;
+  background: #222328;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none; 
+  -moz-user-select: none;
+  -webkit-text-select: none;
+  -webkit-user-select: none;
+}
+
+.max{
+  color: #E3E4E7;
+  font-family: IBM Plex Sans;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
 }
 
 .addressInput {
@@ -354,25 +415,18 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   z-index: 1;
-  height: 0px;
+  padding: 15px 30px ;
+  border-bottom: 1px solid #1C1D21 !important;
+
 }
 
 .swapIconSubContainer {
-  background: #161B2C;
-  border-radius: 9px;
-  height: 38px;
   z-index: 1;
 }
 
 .swapIcon {
   cursor: pointer;
-  padding: 6px;
-  font-size: 30px !important;
-  background: rgb(33, 43, 72);
-  margin: 4px;
-  border-radius: 6px;
 }
 
 .swapInfoContainer {
@@ -560,13 +614,15 @@
 }
 
 .buttonOverride {
-  background: rgb(23, 52, 72) !important;
-  color: rgb(6, 211, 215) !important;
-  font-weight: 700 !important;
+  font-weight: 500 !important;
+  background-color: var(--diffuse-violet-active) !important;
+  color: var(--diffuse-black) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  border-radius: 0px 0px 22px 22px!important;
 }
 
 .buttonOverride:hover {
-  background: rgb(19, 44, 60) !important;
+  background: var(--diffuse-violet-hover) !important;
 }
 
 .route {
