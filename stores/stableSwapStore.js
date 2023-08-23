@@ -799,15 +799,13 @@ class Store {
   }
 
   _getPairs = async () => {
+    console.log('aaaaaGetting pairs')
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/pairs`, {
+      const response = await fetch(`https://edgeapi.diffuse.finance/static/pairs/421613`, {
       	method: 'get',
-      	headers: {
-          'Authorization': `Basic ${process.env.NEXT_PUBLIC_API_TOKEN}`,
-        }
       })
       const pairsCall = await response.json()
-      return pairsCall.data
+      return pairsCall
     } catch(ex) {
       console.log(ex)
       return []
@@ -1630,7 +1628,7 @@ class Store {
 
         // SUBMIT CREATE GAUGE TRANSACTION
         const gaugesContract = new web3.eth.Contract(CONTRACTS.VOTER_ABI, CONTRACTS.VOTER_ADDRESS)
-        this._callContractWait(web3, gaugesContract, 'createGauge', [pairFor], account, gasPrice, null, null, createGaugeTXID, async (err) => {
+        this._callContractWait(web3, gaugesContract, 'createSwapGauge', [pairFor], account, gasPrice, null, null, createGaugeTXID, async (err) => {
           if (err) {
             return this.emitter.emit(ACTIONS.ERROR, err)
           }
@@ -4314,12 +4312,11 @@ class Store {
   }
 
   _callContractWait = (web3, contract, method, params, account, gasPrice, dispatchEvent, dispatchContent, uuid, callback, paddGasCost, sendValue = null) => {
-    // console.log(method)
-    // console.log(params)
-    // if(sendValue) {
-    //   console.log(sendValue)
-    // }
-    // console.log(uuid)
+    console.log('aaMethod', method)
+    console.log('aaParams',params)
+    console.log('aaAccount',account)
+    console.log('aaContract',contract)
+    console.log('aaCallback',callback)
     //estimate gas
     this.emitter.emit(ACTIONS.TX_PENDING, { uuid })
 
@@ -4343,8 +4340,8 @@ class Store {
             gasPrice: web3.utils.toWei(sendGasPrice, 'gwei'),
             gas: sendGasAmount,
             value: sendValue,
-            // maxFeePerGas: web3.utils.toWei(gasPrice, "gwei"),
-            // maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+            maxFeePerGas: web3.utils.toWei((Number(gasPrice) + 1).toString(), "gwei"),  // Ensure it's more than maxPriorityFeePerGas
+            maxPriorityFeePerGas: web3.utils.toWei("1", "gwei"),
           })
           .on("transactionHash", function (txHash) {
             context.emitter.emit(ACTIONS.TX_SUBMITTED, { uuid, txHash })
