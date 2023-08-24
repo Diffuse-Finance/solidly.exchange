@@ -208,7 +208,7 @@ export default function ssLiquidityManage() {
     };
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     ssUpdated()
   }, [router.query.address])
 
