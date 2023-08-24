@@ -1350,7 +1350,7 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
     setOpen(true)
   };
 
-  useEffect(async function() {
+  useEffect(function() {
 
     let ao = assetOptions.filter((asset) => {
       if(search && search !== '') {
@@ -1371,9 +1371,9 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
     setFilteredAssetOptions(ao)
 
     //no options in our default list and its an address we search for the address
-    if(ao.length === 0 && search && search.length === 42) {
-      const baseAsset = await stores.stableSwapStore.getBaseAsset(event.target.value, true, true)
-    }
+    // if(ao.length === 0 && search && search.length === 42) {
+    //   const baseAsset = await stores.stableSwapStore.getBaseAsset(event.target.value, true, true)
+    // }
 
     return () => {
     }

@@ -10,9 +10,9 @@ import { v4 as uuidv4 } from 'uuid'
 import * as moment from "moment"
 import { formatCurrency } from '../utils'
 import stores from "./"
+import axios from 'axios';
 
 import BigNumber from "bignumber.js"
-const fetch = require("node-fetch")
 
 class Store {
   constructor(dispatcher, emitter) {
@@ -752,15 +752,15 @@ class Store {
 
   _getBaseAssets = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/baseAssets`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/v1/baseAssets`, {
       	method: 'get',
       	headers: {
           'Authorization': `Basic ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         }
       })
-      const baseAssetsCall = await response.json()
+      const baseAssetsCall = await response.data
 
-      let baseAssets = baseAssetsCall.data
+      let baseAssets = baseAssetsCall
 
       const nativeFTM = {
         address: CONTRACTS.FTM_ADDRESS,
@@ -784,14 +784,14 @@ class Store {
 
   _getRouteAssets = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/routeAssets`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/v1/routeAssets`, {
       	method: 'get',
       	headers: {
           'Authorization': `Basic ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         }
       })
-      const routeAssetsCall = await response.json()
-      return routeAssetsCall.data
+      const routeAssetsCall = await response.data
+      return routeAssetsCall
     } catch(ex) {
       console.log(ex)
       return []
@@ -801,10 +801,10 @@ class Store {
   _getPairs = async () => {
     console.log('aaaaaGetting pairs')
     try {
-      const response = await fetch(`https://edgeapi.diffuse.finance/static/pairs/421613`, {
+      const response = await axios.get(`https://edgeapi.diffuse.finance/static/pairs/421613`, {
       	method: 'get',
       })
-      const pairsCall = await response.json()
+      const pairsCall = await response.data
       return pairsCall
     } catch(ex) {
       console.log(ex)
@@ -1646,14 +1646,14 @@ class Store {
 
   updatePairsCall = async (web3, account) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/updatePairs`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/v1/updatePairs`, {
         method: 'get',
         headers: {
           'Authorization': `Basic ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         }
       })
-      const pairsCall = await response.json()
-      this.setStore({ pairs: pairsCall.data })
+      const pairsCall = await response.data
+      this.setStore({ pairs: pairsCall })
 
       await this._getPairInfo(web3, account, pairsCall.data)
 
