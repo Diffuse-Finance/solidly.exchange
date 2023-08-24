@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@babel/core": "^7.22.11",
     "@babel/preset-env": "^7.22.10",
     "@dopex-io/web3-multicall": "^0.1.10",
     "@ethersproject/providers": "^5.7.2",
