@@ -5,8 +5,6 @@ module.exports = {
       config.node = {
       }
     }
-    future
-
     return config
   }
 }
