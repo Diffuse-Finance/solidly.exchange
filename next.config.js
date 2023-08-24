@@ -7,9 +7,14 @@ module.exports = {
     }
     config.module.rules.push({
       test: /\.mjs$/,
-      include: /node_modules/,
-      type: "javascript/auto"
-    });
+      include: /node_modules\/@metamask/,
+      use: {
+          loader: 'babel-loader',
+          options: {
+              presets: ['@babel/preset-env']
+          }
+      }
+  });
 
     return config
   }
