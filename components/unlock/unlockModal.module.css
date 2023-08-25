@@ -1,0 +1,22 @@
+.container{
+    border-radius: 20px!important;
+    background-color:var(--diffuse-grey-background)!important ;
+    max-width:360px!important;
+}
+
+.walletContainer{
+    padding: 0px;
+    display: grid;
+    border-right: 1px solid rgba(108,108,123,0.2);
+    border-bottom: 1px solid rgba(108,108,123,0.2);
+}
+
+
+
+.walletContainer:nth-last-child(odd){
+    border-right:none;
+}
+.walletContainer:nth-last-child(1),
+.walletContainer:nth-last-child(2){
+    border-bottom:none;
+}

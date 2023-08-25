@@ -7,6 +7,11 @@ import { Web3ReactProvider, useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 
 import { ACTIONS } from '../../stores/constants';
+
+import stores from "../../stores";
+
+import classesContainer from './unlockModal.module.css'
+
 const {
   ERROR,
   CONNECTION_DISCONNECTED,
@@ -14,7 +19,6 @@ const {
   CONFIGURE_SS
 } = ACTIONS
 
-import stores from "../../stores";
 
 const styles = theme => ({
   root: {
@@ -22,13 +26,12 @@ const styles = theme => ({
     height: "auto",
     display: "flex",
     position: "relative",
+    flexDirection: "column"
   },
   contentContainer: {
-    margin: "auto",
-    textAlign: "center",
-    padding: "12px",
+    justifyContent:'center',
     display: "flex",
-    flexWrap: "wrap",
+  
 
     '@media (max-width: 960px)': {
         paddingTop: '160px',
@@ -67,11 +70,21 @@ const styles = theme => ({
   connect: {
     width: "100%"
   },
-  closeIcon: {
-    position: "absolute",
-    right: "-8px",
-    top: "-8px",
-    cursor: "pointer"
+  closeIcon: {cursor:"pointer"},
+  modalHeader: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottom: "1px solid #2E3036",
+    padding:"28px 30px",
+  },
+  modalTitle : {
+    fontFamily: 'JetBrains Mono, monospace !important',
+    color: '#E3E4E7',
+    fontSize: '16px',
+    fontWeight: '500',
+    letterSpacing: '-0.16px',
   }
 });
 
@@ -133,8 +146,9 @@ class Unlock extends Component {
 
     return (
       <div className={classes.root}>
-        <div className={classes.closeIcon} onClick={closeModal}>
-          <CloseIcon />
+        <div className={classes.modalHeader}>
+          <p className={classes.modalTitle}>CONNECT WALLET</p>
+          <CloseIcon className={classes.closeIcon} onClick={closeModal} />
         </div>
         <div className={classes.contentContainer}>
           <Web3ReactProvider getLibrary={getLibrary}>
@@ -217,10 +231,9 @@ function MyComponent(props) {
   return (
     <div
       style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: width > 576 ? "space-between" : "center",
-        alignItems: "center"
+        width:'100%',
+        display: "grid",
+        gridTemplateColumns:"1fr 1fr",
       }}
     >
       {Object.keys(connectorsByName).map(name => {
@@ -274,19 +287,15 @@ function MyComponent(props) {
         return (
           <div
             key={name}
-            style={{
-              padding: "0px",
-              display: "flex",
-              margin: width > 576 ? "12px 0px" : "0px",
-            }}
+            className={classesContainer.walletContainer}
           >
             <Button
               style={{
-                width: width > 576 ? "350px" : "calc(100vw - 100px)",
-                height: "200px",
+                width: "100%",
+                height: "100%",
+                borderRadius:"0",
+                color: "rgba(108,108,123,1)",
                 backgroundColor: "rgba(0,0,0,0.05)",
-                border: "1px solid rgba(108,108,123,0.2)",
-                color: "rgba(108,108,123,1)"
               }}
               variant="contained"
               onClick={() => {
@@ -313,14 +322,14 @@ function MyComponent(props) {
               >
                 <img
                   style={{
-                    width: "60px",
-                    height: "60px"
+                    width: "40px",
+                    height: "40px"
                   }}
                   src={url}
                   alt=""
                 />
                 <Typography style={{ color: "#FFFFFF", marginBottom: "-15px"}} variant={"h2"}>{display}</Typography>
-                <Typography style={{ color: "#7E99B0",}} variant={"body2"}>{descriptor}</Typography>
+                {/* <Typography style={{ color: "#7E99B0",}} variant={"body2"}>{descriptor}</Typography> */}
                 {activating && (
                   <CircularProgress size={15} style={{ marginRight: "10px" }} />
                 )}

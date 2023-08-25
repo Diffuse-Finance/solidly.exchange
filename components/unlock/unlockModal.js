@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { DialogContent, Dialog, Slide } from "@material-ui/core";
 
+import classes from './unlockModal.module.css'
+
 import Unlock from "./unlock.js";
 
 function Transition(props) {
@@ -21,8 +23,9 @@ class UnlockModal extends Component {
         maxWidth={"sm"}
         TransitionComponent={Transition}
         fullScreen={fullScreen}
+        classes={{ paper: classes.container  }}
       >
-        <DialogContent>
+        <DialogContent style={{padding:'0'}}>
           <Unlock closeModal={closeModal} />
         </DialogContent>
       </Dialog>
