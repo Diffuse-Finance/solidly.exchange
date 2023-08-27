@@ -10,9 +10,9 @@ import { v4 as uuidv4 } from 'uuid'
 import * as moment from "moment"
 import { formatCurrency } from '../utils'
 import stores from "./"
+import axios from 'axios';
 
 import BigNumber from "bignumber.js"
-const fetch = require("node-fetch")
 
 class Store {
   constructor(dispatcher, emitter) {
@@ -752,15 +752,15 @@ class Store {
 
   _getBaseAssets = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/baseAssets`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/v1/baseAssets`, {
       	method: 'get',
       	headers: {
           'Authorization': `Basic ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         }
       })
-      const baseAssetsCall = await response.json()
+      const baseAssetsCall = await response.data
 
-      let baseAssets = baseAssetsCall.data
+      let baseAssets = baseAssetsCall
 
       const nativeFTM = {
         address: CONTRACTS.FTM_ADDRESS,
@@ -784,14 +784,14 @@ class Store {
 
   _getRouteAssets = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/routeAssets`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/v1/routeAssets`, {
       	method: 'get',
       	headers: {
           'Authorization': `Basic ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         }
       })
-      const routeAssetsCall = await response.json()
-      return routeAssetsCall.data
+      const routeAssetsCall = await response.data
+      return routeAssetsCall
     } catch(ex) {
       console.log(ex)
       return []
@@ -799,15 +799,13 @@ class Store {
   }
 
   _getPairs = async () => {
+    console.log('aaaaaGetting pairs')
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/pairs`, {
+      const response = await axios.get(`https://edgeapi.diffuse.finance/static/pairs/421613`, {
       	method: 'get',
-      	headers: {
-          'Authorization': `Basic ${process.env.NEXT_PUBLIC_API_TOKEN}`,
-        }
       })
-      const pairsCall = await response.json()
-      return pairsCall.data
+      const pairsCall = await response.data
+      return pairsCall
     } catch(ex) {
       console.log(ex)
       return []
@@ -1630,7 +1628,7 @@ class Store {
 
         // SUBMIT CREATE GAUGE TRANSACTION
         const gaugesContract = new web3.eth.Contract(CONTRACTS.VOTER_ABI, CONTRACTS.VOTER_ADDRESS)
-        this._callContractWait(web3, gaugesContract, 'createGauge', [pairFor], account, gasPrice, null, null, createGaugeTXID, async (err) => {
+        this._callContractWait(web3, gaugesContract, 'createSwapGauge', [pairFor], account, gasPrice, null, null, createGaugeTXID, async (err) => {
           if (err) {
             return this.emitter.emit(ACTIONS.ERROR, err)
           }
@@ -1648,14 +1646,14 @@ class Store {
 
   updatePairsCall = async (web3, account) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/v1/updatePairs`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/v1/updatePairs`, {
         method: 'get',
         headers: {
           'Authorization': `Basic ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         }
       })
-      const pairsCall = await response.json()
-      this.setStore({ pairs: pairsCall.data })
+      const pairsCall = await response.data
+      this.setStore({ pairs: pairsCall })
 
       await this._getPairInfo(web3, account, pairsCall.data)
 
@@ -4314,12 +4312,11 @@ class Store {
   }
 
   _callContractWait = (web3, contract, method, params, account, gasPrice, dispatchEvent, dispatchContent, uuid, callback, paddGasCost, sendValue = null) => {
-    // console.log(method)
-    // console.log(params)
-    // if(sendValue) {
-    //   console.log(sendValue)
-    // }
-    // console.log(uuid)
+    console.log('aaMethod', method)
+    console.log('aaParams',params)
+    console.log('aaAccount',account)
+    console.log('aaContract',contract)
+    console.log('aaCallback',callback)
     //estimate gas
     this.emitter.emit(ACTIONS.TX_PENDING, { uuid })
 
@@ -4343,8 +4340,8 @@ class Store {
             gasPrice: web3.utils.toWei(sendGasPrice, 'gwei'),
             gas: sendGasAmount,
             value: sendValue,
-            // maxFeePerGas: web3.utils.toWei(gasPrice, "gwei"),
-            // maxPriorityFeePerGas: web3.utils.toWei("2", "gwei"),
+            maxFeePerGas: web3.utils.toWei((Number(gasPrice) + 1).toString(), "gwei"),  // Ensure it's more than maxPriorityFeePerGas
+            maxPriorityFeePerGas: web3.utils.toWei("1", "gwei"),
           })
           .on("transactionHash", function (txHash) {
             context.emitter.emit(ACTIONS.TX_SUBMITTED, { uuid, txHash })
