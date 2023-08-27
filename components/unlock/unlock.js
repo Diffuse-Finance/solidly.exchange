@@ -70,7 +70,7 @@ const styles = theme => ({
   connect: {
     width: "100%"
   },
-  closeIcon: {cursor:"pointer"},
+  closeIcon: {cursor:"pointer",height:"20px",width:"20px"},
   modalHeader: {
     width: "100%",
     display: "flex",
@@ -85,6 +85,8 @@ const styles = theme => ({
     fontSize: '16px',
     fontWeight: '500',
     letterSpacing: '-0.16px',
+    margin:'0',
+    padding:'0'
   }
 });
 

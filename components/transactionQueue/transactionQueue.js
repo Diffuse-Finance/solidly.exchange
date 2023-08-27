@@ -172,9 +172,6 @@ export default function TransactionQueue({ setQueueLength }) {
 
     return (
       <>
-        <div className={ classes.headingContainer }>
-          <Typography className={ classes.heading }>{ purpose ? purpose : 'Pending Transactions'}</Typography>
-        </div>
         <div className={ classes.transactionsContainer}>
           {
             transactions && transactions.map((tx, idx) => {
@@ -196,13 +193,15 @@ export default function TransactionQueue({ setQueueLength }) {
       TransitionComponent={Transition}
       fullScreen={fullScreen}
     >
-      <DialogContent>
-        <IconButton className={ classes.closeIconbutton }
-          onClick={handleClose}>
-          <CloseIcon />
-        </IconButton>
-        { renderTransactions(transactions) }
-        { renderDone(transactions) }
+      <DialogContent style={{padding:'0',borderRadius:'20px'}}>
+        <div className={classes.modalContainer}>
+          <div className={ classes.modalHeader }>
+            <p className={ classes.modalTitle }>{ purpose ? purpose : 'Pending Transactions'}</p>
+            <CloseIcon className={classes.closeIcon} onClick={handleClose} />
+          </div>
+          { renderTransactions(transactions) }
+          { renderDone(transactions) }
+        </div>
       </DialogContent>
     </Dialog>
   );

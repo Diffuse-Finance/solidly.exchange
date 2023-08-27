@@ -1,35 +1,60 @@
-.headingContainer {
-  padding: 24px;
+
+.modalContainer{
+  border-radius: 20px;
 }
 
-.heading {
-  font-size: 24px !important;
+.modalTitle {
+  font-family: 'JetBrains Mono', sans-serif !important;
+  text-align: left;
   width: 100%;
-  text-align: center;
+  color: #E3E4E7;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.16px;
+  text-transform: uppercase;
+  padding: 0;
+  margin:0;
 }
 
 .transactionsContainer {
-  border-radius: 12px;
-  background: rgb(33, 43, 72);
-  border: 1px solid rgba(108,108,123, 0.2);
-  padding: 24px;
-  margin-bottom: 12px;
+
 }
 
 .transaction {
-  padding: 12px 12px;
+  padding: 28px 30px;
   border-bottom: 1px solid rgba(108,108,123, 0.2);
   cursor: pointer;
+  color: #E3E4E7;
+  font-family: IBM Plex Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%; /* 16px */
+  letter-spacing: -0.16px;
 }
 
+.transactionSuccess {
+  background: #5CB376;
+  color: #0F1011;
+}
+
+
 .transaction:hover {
+  color: #E3E4E7;
   background: rgba(0, 0, 0, 0.2);
 }
 
-.closeIconbutton {
-  position: absolute !important;
-  right: 0px;
-  top: 0px;
+.trnsaction:hover .checkCircleIcon{
+  color:#E3E4E799;
+}
+
+.modalHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #2E3036;
+  padding:28px 30px;
 }
 
 .transactionInfo {
@@ -50,16 +75,6 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-}
-
-.orangeIcon {
-  color: #ffc512 !important;
-}
-.greenIcon {
-  color: #49a766 !important;
-}
-.redIcon {
-  color: #dc3545 !important;
 }
 
 .errorText {
@@ -120,4 +135,40 @@
   font-size: 15px !important;
   margin-bottom: -2px;
   margin-left: 3px;
+}
+
+
+.transactionIcon{
+  width: 20px!important;
+  height: 20px!important;
+  color: #E3E4E799;
+}
+
+.closeIcon{
+  width: 20px!important;
+  height: 20px!important;
+  cursor: pointer;
+}
+.pauseIcon{
+  color: #E3E4E799;
+}
+
+.hourglassEmptyIcon{
+  color: #E3E4E799;
+}
+
+.hourglassFullIcon{
+  color: #E3E4E799;
+}
+
+.CheckIcon{
+  color:#0F1011;
+}
+
+.errorIcon{
+  color: #E3E4E799;
+}
+
+.checkCircleIcon{
+  color: #E3E4E799;
 }
