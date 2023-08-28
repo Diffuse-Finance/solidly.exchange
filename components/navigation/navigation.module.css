@@ -341,22 +341,22 @@ a.linkz { cursor: pointer !important; }
     padding: 15px 0px !important;
     border-radius: 0px !important;
     z-index: 10020;
-    background: transparent
+    background: transparent;
   }
   .socials {
     display: none;
   }
   .navigationContent {
     /* display: none; */
-    background: #111729;
+    background: transparent;
     position: fixed;
     left: 0;
     top: 60px;
     width: 100%;
     text-align: center;
     padding: 15px 0;
-    border-bottom: 1px solid rgba(126,153,176,0.2);
   }
+  
   .navigationContentMobile {
     position: fixed;
     top: 0px;
@@ -474,7 +474,7 @@ a.linkz { cursor: pointer !important; }
   }
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 620px) {
   .navToggles {
     min-height: 30px;
   }
@@ -484,7 +484,6 @@ a.linkz { cursor: pointer !important; }
     padding: 8px 10px 8px 10px !important;
     text-transform: capitalize !important;
     border: 1px solid rgba(0,0,0,0) !important;
-    color: #7E99B0 !important;
   }
 
   .subtitleText {
@@ -503,19 +502,17 @@ a.linkz { cursor: pointer !important; }
   }
 
   .testChange {
-    border: 1px solid #06d3d7 !important;
     background-color: rgba(0,0,0,0) !important;
-    color: #FFF !important;
+    color: var(--diffuse-violet-active) !important;
+    position: relative;
   }
 
   .navigationContent {
-    background: #111729;
     position: fixed;
     left: 0;
     top: 45px;
     width: 100%;
     text-align: center;
     padding: 15px 0;
-    border-bottom: 1px solid rgba(126,153,176,0.2);
   }
 }

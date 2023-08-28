@@ -1080,7 +1080,7 @@ export default function ssLiquidityManage() {
             <ArrowBackIcon className={ classes.backIcon } />
             </IconButton>
           </Tooltip>
-          <Grid container spacing={0} style={{width: '50%', borderBottom: '1px solid #222328'}}>
+          <Grid className={classes.gridTabs} container spacing={0}>
             <Grid item lg={6} md={6} sm={6} xs={6}>
             <Paper className={ `${activeTab === 'deposit' ? classes.buttonActive : classes.button} ${ classes.topLeftButton }` } onClick={ toggleDeposit } disabled={ depositLoading }>
               {activeTab === 'deposit' && <ActiveBar />}

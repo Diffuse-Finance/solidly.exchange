@@ -30,6 +30,7 @@
   flex-direction: column;
   width: 100%;
   background-color: #16171a;
+  border-radius: 22px;
 
 }
 
@@ -712,8 +713,10 @@
 }
 
 @media screen and (max-width: 1200px) {
+
+
   .swapContainer {
-    padding: 12px;
+    
   }
   .newSwapContainer {
     flex-direction: column;
@@ -725,7 +728,7 @@
     margin-top: -100px;
   }
   .swapContainer {
-    padding: 12px;
+    
   }
   .addressInput {
     font-size: 12px !important;

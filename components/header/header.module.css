@@ -349,11 +349,14 @@
   }
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 620px) {
   .accountButton {
     min-height: 40px;
     padding-left: 16px !important;
     padding-right: 16px !important;
     top: 10px !important;
+  }
+  .logoContainer{
+    display: none;
   }
 }
