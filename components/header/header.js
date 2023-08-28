@@ -217,8 +217,9 @@ function Header(props) {
     stores.dispatcher.dispatch({ type: FIXED_FOREX_CLAIM_VECLAIM, content: {} })
   }
 
-  const switchChain = async () => {
-    let hexChain = '0xfa'
+  const switchChain = async (chainId) => {
+    const hexChain = '0x' + parseInt(chainId).toString(16);
+
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
@@ -333,7 +334,7 @@ function Header(props) {
           <Typography className={classes.ErrorTxt}>
             The chain you're connected to isn't supported. Please check that your wallet is connected to Fantom Mainnet.
           </Typography>
-          <Button className={classes.switchNetworkBtn} variant="contained" onClick={()=>switchChain()} >Switch to { process.env.NEXT_PUBLIC_CHAINID == '421613' ? 'Arbitrum Goerli Testnet' : 'Fantom Mainnet' }</Button>
+          <Button className={classes.switchNetworkBtn} variant="contained" onClick={()=>switchChain(process.env.NEXT_PUBLIC_CHAINID)} >Switch to { process.env.NEXT_PUBLIC_CHAINID == '421613' ? 'Arbitrum Goerli Testnet' : 'Fantom Mainnet' }</Button>
         </div>
       </div>
     ) : null}
