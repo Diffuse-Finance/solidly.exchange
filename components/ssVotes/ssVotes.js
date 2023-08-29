@@ -189,9 +189,12 @@ export default function ssVotes() {
               value={search}
               onChange={onSearchChanged}
               InputProps={{
+                classes: {
+                  adornedStart: classes.adornedStart,
+                },
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon />
+                    <SearchIcon className={classes.searchIcon} />
                   </InputAdornment>
                 ),
               }}
@@ -223,14 +226,13 @@ export default function ssVotes() {
         }) } setParentSliderValues={setVotes} defaultVotes={votes} veToken={veToken} token={ token } />
       </Paper>
       <Paper elevation={10} className={ classes.actionButtons }>
-        <Grid container spacing={2}>
           <Grid item lg={6}>
             <div className={ classes.infoSection }>
-              <Typography>Voting Power Used: </Typography>
-              <Typography className={ `${BigNumber(totalVotes).gt(100) ? classes.errorText : classes.helpText}` }>{ totalVotes } %</Typography>
+              <Typography className={classes.infoText}>Voting Power Used: </Typography>
+              <Typography className={ `${classes.infoText} ${BigNumber(totalVotes).gt(100) ? classes.errorText : classes.helpText}` }>{ totalVotes }%</Typography>
             </div>
           </Grid>
-          <Grid item lg={6}>
+          <Grid item>
             <Button
               className={ classes.buttonOverrideFixed }
               variant='contained'
@@ -243,7 +245,6 @@ export default function ssVotes() {
               { voteLoading && <CircularProgress size={10} className={ classes.loadingCircle } /> }
             </Button>
           </Grid>
-        </Grid>
       </Paper>
     </div>
   );
