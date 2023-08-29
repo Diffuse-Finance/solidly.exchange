@@ -233,17 +233,22 @@ const useStyles = makeStyles((theme) => ({
     height: '35px'
   },
   buttonOverride: {
-    color: 'rgb(6, 211, 215)',
-    background: 'rgb(23, 52, 72)',
-    fontWeight: '700',
-    width: '100%',
+    width: '182px',
+    minWidth:'182px',
+    '@media (max-width: 600px)': {
+      width: '100%',
+    },
+    padding: '14px 20px',
+    borderRadius:'22px',
     '&:hover': {
-      background: 'rgb(19, 44, 60)'
+      background: '#BBB4D6'
     },
   },
   toolbar: {
     margin: '24px 0px',
     padding: '0px',
+    display:'flex',
+    justifyContent:'end'
   },
   tableContainer: {
     border: '1px solid rgba(104, 108, 122, 0.25)',
@@ -253,9 +258,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end'
   },
   actionButtonText: {
-    fontSize: '15px',
-    fontWeight: '700',
-  }
+    fontFamily:'JetBrains Mono, monospace',
+    color: '#0F1011',
+    fontWeight: '500',
+    fontSize:'16px',
+  },
 }));
 
 const EnhancedTableToolbar = (props) => {
@@ -273,10 +280,7 @@ const EnhancedTableToolbar = (props) => {
   }
 
   return (
-    <Toolbar className={ classes.toolbar }>
-
-      <Grid container spacing={1}>
-        <Grid lg='auto' md={12} sm={12} xs={12} item>
+    <Toolbar className={ classes.toolbar }>  
           <Button
             variant="contained"
             color="secondary"
@@ -288,11 +292,6 @@ const EnhancedTableToolbar = (props) => {
           >
             <Typography className={ classes.actionButtonText }>Create Lock</Typography>
           </Button>
-        </Grid>
-        <Grid item lg={true} md={true} sm={false} xs={false}></Grid>
-      </Grid>
-
-
     </Toolbar>
   );
 };
