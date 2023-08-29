@@ -15,9 +15,13 @@
 }
 
 .helpText {
-  color: rgba(126,153,176,0.9);
-  margin: 0 15px 0 0 !important;
-  padding: 15px 0;
+  font-family: 'JetBrains Mono', monospace !important;
+  color: var(--diffuse-text-help-grey);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: -0.16px;
 }
 
 .tableContainer {
@@ -35,6 +39,8 @@
   justify-content: space-between;
   width: 100%;
   margin-bottom: 24px;
+  gap: 20px;
+
 }
 
 .searchContainer {
@@ -44,15 +50,26 @@
 }
 
 .buttonOverride {
-  background: rgb(23, 52, 72) !important;
-  color: rgb(6, 211, 215) !important;
-  font-weight: 700 !important;
-  width: 100%;
-  min-width: 200px !important;
+  font-weight: 500 !important;
+  background-color: var(--diffuse-violet-active) !important;
+  color: var(--diffuse-black) !important;
+  border-radius: 22px!important;
+  padding: 14px 20px !important;
 }
 
 .buttonOverride:hover {
-  background: rgb(19, 44, 60);
+  background: var(--diffuse-violet-hover) !important;
+}
+
+.actionButtonText{
+  font-family: 'JetBrains Mono', monospace !important;
+  color: var(--diffuse-black)!important;
+  font-size: 16px!important;
+  font-style: normal!important;
+  font-weight: 500!important;
+  letter-spacing: -0.16px!important;
+  text-transform: uppercase!important;
+
 }
 
 .filterContainer {
@@ -78,13 +95,14 @@
 
 .mediumInputContainer {
   display: flex;
-  flex-wrap: wrap;
-  border-radius: 10px;
   width: 100%;
   align-items: center;
   background: rgb(33, 43, 72);
   padding: 0 20px;
-  min-height: 60px;
+
+  border-radius: 22px;
+  background: var(--diffuse-black-button);
+  padding: 14px 20px;
 }
 
 .mediumInputAssetSelect {
@@ -97,7 +115,6 @@
   flex: 1;
   height: 100%;
   width: 100%;
-  min-width: 300px;
 }
 
 .mediumInputAddress {
@@ -122,6 +139,12 @@
 }
 
 .tokenIDContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.textField{
+  width: 100%;
 }
 
 .disclaimerContainer {
@@ -147,4 +170,17 @@
     margin-bottom: 20px;
     margin-top: 100px;
   }
+  
 }
+
+@media screen and (max-width: 630px) {
+  .toolbarContainer{
+    flex-direction: column;
+    align-items: baseline;
+  }
+  .buttonOverride{
+    width: 100%;
+  }
+
+}
+

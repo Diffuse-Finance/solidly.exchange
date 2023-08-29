@@ -142,11 +142,9 @@ export default function ssRewards() {
     return (
       <div className={ classes.textField}>
         <div className={ classes.mediumInputContainer}>
-          <Grid container>
-            <Grid item lg='auto' md='auto' sm={12} xs={12}>
-              <Typography variant="body2" className={ classes.helpText }>Please select your veNFT:</Typography>
+            <Grid item style={{display:'flex',alignItems:'center'}} alignItems='center' lg='auto' md='auto' sm={12} xs={12}>
+              <Typography variant="body2" className={ classes.helpText }>YOUR veNFT:</Typography>
             </Grid>
-            <Grid item lg={6} md={6} sm={12} xs={12}>
             <div className={ classes.mediumInputAmount }>
               <Select
                 fullWidth
@@ -171,8 +169,6 @@ export default function ssRewards() {
                 })}
               </Select>
             </div>
-            </Grid>
-          </Grid>
         </div>
       </div>
     )
@@ -181,22 +177,17 @@ export default function ssRewards() {
   return (
     <div className={ classes.container}>
       <div className={ classes.toolbarContainer }>
-        <Grid container spacing={1}>
-          <Grid item lg='auto' md='auto' sm={12} xs={12}>
             <div className={ classes.tokenIDContainer }>
               { renderMediumInput(token, vestNFTs) }
             </div>
-          </Grid>
-          <Grid item lg={true} md={true} sm={false} xs={false}>
+          {/* <Grid item lg={true} md={true} sm={false} xs={false}>
             <div className={ classes.disclaimerContainer }>
               <Typography className={ classes.disclaimer }>Rewards are an estimation that aren't exact till the supply - rewardPerToken calculations have run</Typography>
             </div>
-          </Grid>
-          <Grid item lg='auto' md='auto' sm='12' xs='12'>
+          </Grid> */}
             <Button
               variant="contained"
               color="secondary"
-              startIcon={<AddCircleOutlineIcon />}
               size='large'
               className={ classes.buttonOverride }
               onClick={ onClaimAll }
@@ -204,8 +195,6 @@ export default function ssRewards() {
             >
               <Typography className={ classes.actionButtonText }>Claim All</Typography>
             </Button>
-          </Grid>
-        </Grid>
       </div>
       <RewardsTable rewards={rewards} vestNFTs={ vestNFTs } tokenID={ token?.id } />
     </div>

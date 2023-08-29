@@ -23,9 +23,14 @@ button {
 
   --diffuse-text-grey : #7E818D ;
 
+  --diffuse-text-help-grey : #9094A1; 
+
   --diffuse-black : #0F1011;
   
   --diffuse-light-black:#16171A;
 
+  --diffuse-black-button : #1C1D21;
+
   --diffuse-grey-background: #222328;
+  
 }
