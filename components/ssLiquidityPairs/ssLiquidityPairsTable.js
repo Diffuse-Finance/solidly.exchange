@@ -28,7 +28,7 @@ import { useRouter } from "next/router";
 import BigNumber from 'bignumber.js';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import AddIcon from '@material-ui/icons/Add';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import { formatCurrency } from '../../utils';
@@ -356,6 +356,21 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
       },
   },
+  toolBarHeader:{
+    display:'flex',
+    width:'100%',
+    alignItems:'center',
+    gap:'10px',
+    '@media (max-width: 600px)': {
+      flexDirection:'column'
+    },
+  },
+  searchFilterContainer:{
+    display:'flex',
+    alignItems:'center',
+    gap:'10px',
+    width:'100%',
+  },
   doubleImages: {
     display: 'flex',
     position: 'relative',
@@ -367,14 +382,33 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
   },
+  adornedStart:{
+    borderRadius: '22px',
+    border: '1px solid #1C1D21',
+  },
+  searchIcon:{
+    color:'#9094A1D9'
+  },
   buttonOverride: {
-    width: '100%',
-    color: 'rgb(6, 211, 215)',
-    background: 'rgb(23, 52, 72)',
-    fontWeight: '700',
-    '&:hover': {
-      background: 'rgb(19, 44, 60)'
+    width: '192px',
+    minWidth:'192px',
+    
+    '@media (max-width: 600px)': {
+      width: '100%',
     },
+    background: '#A89FCA',
+    padding: '14px 20px',
+    borderRadius:'22px',
+    '&:hover': {
+      background: '#BBB4D6'
+    },
+  },
+  actionButtonText: {
+    fontFamily:'JetBrains Mono, monospace',
+    fontWeight: '500',
+    color: '#0F1011',
+    fontSize:'16px',
+    width:'192px'
   },
   toolbar: {
     margin: '24px 0px',
@@ -388,16 +422,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end'
   },
   filterButton: {
-    background: '#111729',
-    border: '1px solid rgba(126,153,176,0.3)',
-    color: '#06D3D7',
-    width: '100%',
-    height: '94.5%',
-    borderRadius: '10px',
-  },
-  actionButtonText: {
-    fontSize: '15px',
-    fontWeight: '700',
+    width: "44px",
+    height:" 44px",
+    background: '#1C1D21',
+    color:'#fff',
+    borderRadius: '100%',
   },
   filterContainer: {
     background: '#212b48',
@@ -540,45 +569,45 @@ const EnhancedTableToolbar = (props) => {
   return (
     <Toolbar className={ classes.toolbar }>
 
-    <Grid container spacing={2}>
-      <Grid item lg={2} md={2} sm={12} xs={12}>
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<AddCircleOutlineIcon />}
-          size='large'
-          className={ classes.buttonOverride }
-          color='primary'
-          onClick={ onCreate }
-        >
-          <Typography className={ classes.actionButtonText }>Add Liquidity</Typography>
-        </Button>
-      </Grid>
-      <Grid item lg={9} md={9} sm={10} xs={10}>
-        <TextField
-          className={classes.searchContainer}
-          variant="outlined"
-          fullWidth
-          placeholder="FTM, MIM, 0x..."
-          value={search}
-          onChange={onSearchChanged}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Grid>
-      <Grid item lg={1} md={true} sm={2} xs={2}>
+    <div className={classes.toolBarHeader}>
+      <div className={classes.searchFilterContainer}>
+          <TextField
+            className={classes.searchContainer}
+            variant="outlined"
+            fullWidth
+            placeholder="FTM, MIM, 0x..."
+            value={search}
+            onChange={onSearchChanged}
+            InputProps={{
+              classes: {
+                adornedStart: classes.adornedStart,
+              },
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon className={classes.searchIcon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+      
         <Tooltip placement="top" title="Filter list">
           <IconButton onClick={handleClick} className={ classes.filterButton } aria-label="filter list">
             <FilterListIcon />
           </IconButton>
         </Tooltip>
-      </Grid>
-    </Grid>
+        </div>
+        <Button
+          variant="contained"
+          color="secondary"
+          startIcon={<AddIcon />}
+          size='large'
+          className={ classes.buttonOverride }
+          color='primary'
+          onClick={ onCreate }
+        >
+          <Typography className={ classes.actionButtonText }>ADD LIQUIDITY</Typography>
+        </Button>
+    </div>
 
       <Popper id={id} open={open} anchorEl={anchorEl} transition placement="bottom-end">
         {({ TransitionProps }) => (
