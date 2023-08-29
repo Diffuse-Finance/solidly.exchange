@@ -10,9 +10,13 @@
 }
 
 .smallText {
-  color: rgba(126,153,176,0.9);
-  margin: 0 15px 0 0 !important;
-  padding: 18px 0;
+  font-family: 'JetBrains Mono', monospace !important;
+  color: var(--diffuse-text-help-grey);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: -0.16px;
 }
 
 .tableContainer {
@@ -104,8 +108,13 @@
 }
 
 .tokenIDContainer {
-  border: 1px solid rgba(104, 108, 122, 0.25);
-  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.textField{
+  width: 100%;
 }
 
 .searchContainer {
@@ -133,12 +142,14 @@
 
 .mediumInputContainer {
   display: flex;
-  flex-wrap: wrap;
-  border-radius: 10px;
   width: 100%;
   align-items: center;
   background: rgb(33, 43, 72);
   padding: 0 20px;
+
+  border-radius: 22px;
+  background: var(--diffuse-black-button);
+  padding: 14px 20px;
 }
 
 .mediumInputAssetSelect {

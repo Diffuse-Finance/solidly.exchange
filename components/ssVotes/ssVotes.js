@@ -122,12 +122,10 @@ export default function ssVotes() {
     return (
       <div className={ classes.textField}>
         <div className={ classes.mediumInputContainer}>
-          <Grid container>
-            <Grid item lg='auto' md='auto' sm={12} xs={12}>
-              <Typography variant="body2" className={ classes.smallText }>Please select your veNFT:</Typography>
+            <Grid item style={{display:'flex',alignItems:'center'}} alignItems='center' lg='auto' md='auto' sm={12} xs={12}>
+              <Typography variant="body2" className={ classes.smallText }>YOUR veNFT:</Typography>
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={ classes.mediumInputAmount }>
                 <Select
                   fullWidth
@@ -152,8 +150,6 @@ export default function ssVotes() {
                   })}
                 </Select>
               </div>
-            </Grid>
-          </Grid>
         </div>
       </div>
     )
@@ -164,8 +160,8 @@ export default function ssVotes() {
       <div className={ classes.topBarContainer }>
 
         <Grid container spacing={1}>
-          <Grid item lg='auto' lg='auto' sm={12} xs={12}>
             {/*
+          <Grid item lg='auto' lg='auto' sm={12} xs={12}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -178,9 +174,9 @@ export default function ssVotes() {
               >
                 <Typography className={ classes.actionButtonText }>{ `Create Bribe` }</Typography>
               </Button>
-            */}
           </Grid>
-          <Grid item lg={true} md={true} sm={12} xs={12}>
+            */}
+          <Grid item lg={6} md={6} sm={6} xs={12}>
             <TextField
               className={classes.searchContainer}
               variant="outlined"
@@ -200,7 +196,7 @@ export default function ssVotes() {
               }}
             />
           </Grid>
-          <Grid item lg='auto' lg='auto' sm={12} xs={12}>
+          <Grid item lg={6} md={6} sm={6} xs={12}>
             <div className={ classes.tokenIDContainer }>
               { renderMediumInput(token, vestNFTs) }
             </div>
