@@ -1,20 +1,16 @@
 .vestContainer {
-  width: calc(100% - 180px);
-  max-width: 485px;
   margin: 0 auto;
   position: relative;
-}
-
-.backButton {
-  top: 24px;
-  left: 0px;
-  position: absolute !important;
 }
 
 .smallerText {
   font-size: 12px !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
+  color: #E3E4E7!important;
+  font-family: IBM Plex Sans!important;
+  font-size: 32px!important;
+  font-weight: 400!important;
 }
 
 .container {
@@ -39,17 +35,20 @@
 }
 
 .container3 {
-  width: calc(100%);
-  border: 1px solid rgba(104, 108, 122, 0.25);
-  left: 0;
-  right: 0;
-  margin: auto;
-  padding: 24px;
+  padding: 30px;
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 4px;
 }
+.paperContainer{
+  max-width: 600px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 1px solid rgba(104, 108, 122, 0.25);
+  background:var(--diffuse-light-black);
 
+}
 .contentBox {
 }
 
@@ -143,9 +142,14 @@
 }
 
 .actionButtonText {
-  font-size: 15px !important;
-  text-transform: capitalize !important;
-  font-weight: 700 !important;
+  color: #0F1011;
+  font-family: JetBrains Mono!important;
+  font-size: 16px!important;
+  font-style: normal;
+  font-weight: 700!important;
+  line-height: 100%; /* 16px */
+  letter-spacing: -0.16px;
+  text-transform: uppercase!important;
 }
 
 .buttonStretch {
@@ -187,13 +191,16 @@
 }
 
 .buttonOverride {
-  background: rgb(23, 52, 72) !important;
-  color: rgb(6, 211, 215) !important;
+  background: #A89FCA !important;
+  color: #0F1011 !important;
   font-weight: 700 !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  padding: 30px;
 }
 
 .buttonOverride:hover {
-  background: rgb(19, 44, 60) !important;
+  background: rgb(255, 255, 255, 0.7) !important;
 }
 
 .toggleButtons {
@@ -262,27 +269,72 @@
   width: 100%;
   height: 130px;
 }
+.dateContainer{
+  padding: 30px 0;
+}
+
+.inlineDate{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .inline {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 30px 0;
 }
 
 .expiresIn {
-  background: none;
-  opacity: 0.6;
-  width: 80px;
-  font-size: 12px !important;
+  color: var(--diffuse-white-text);
+  font-family: IBM Plex Sans!important;
+  font-size: 16px!important;
+  font-style: normal!important;
+  font-weight: 500!important;
+  line-height: 100%!important; /* 16px */
 }
 
 .vestPeriodToggle {
   background: none;
   opacity: 0.6;
   flex: 1;
+  justify-content: flex-end;
+  gap: 7px;
 }
 
+.vestPeriodLabel{
+  display: flex;
+  height: 44px;
+  padding: 0px 15px;
+  align-items: center;
+  gap: 10px;
+  margin: 0!important;
+  user-select: none;
+
+  border: 2px solid rgba(255, 255, 255, 0);
+  border-radius: 22px;
+  background: rgba(168, 159, 202, 0.10);
+}
+
+.vestPeriodLabel.vestPeriodLabelActive,
+.vestPeriodLabel:hover{
+  border: 2px solid rgba(168, 159, 202, 0.50);
+  background: rgba(168, 159, 202, 0.10);
+}
 .vestPeriodLabel > span {
-  font-size: 12px !important;
+  color: var(--diffuse-white-text);
+  font-family: JetBrains Mono;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%; /* 16px */
+  letter-spacing: -0.16px;
+  text-transform: uppercase;
+}
+.vestPeriodLabel.vestPeriodLabelActive > span ,
+.vestPeriodLabel:hover > span {
+  color: var(--diffuse-violet-active);
 }
 
 
@@ -340,22 +392,18 @@
 .massiveInputContainer {
   display: flex;
   flex-wrap: wrap;
-  border-radius: 10px;
   width: 100%;
+  height: 100%;
   align-items: center;
-  background: rgb(33, 43, 72);
+  justify-content: space-between;
 }
 
 .massiveInputAssetSelect {
   width: 124px;
-  min-height: 124px;
-  height: 100%;
 }
 
 .massiveInputAmount {
   flex: 1;
-  height: 100%;
-  max-width: calc(100% - 124px);
 }
 
 .massiveInputAddress {
@@ -364,22 +412,19 @@
 }
 
 .displaySelectContainer {
-  padding: 12px;
-  min-height: 100px;
 }
 
 .displayDualIconContainer {
   width: 100px;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .displayAssetIcon {
-  border: 1px solid rgba(126, 153, 176, 0.2);
-  border-radius: 50px;
-  background: rgb(33, 43, 72);
-  width: 100px;
-  height: 100px;
-  padding: 10px;
+  width: 40px;
+  height: 40px;
 }
 
 .displayAssetIconWhite {
@@ -414,11 +459,12 @@
 }
 
 .inputBalanceText {
-  font-weight: 100 !important;
-  font-size: 12px !important;
-  color: #7e99b0;
-  margin-right: 6px !important;
-  margin-top: 6px !important;
+  margin: 20px 0 !important;
+  color: var(--diffuse-text-grey);
+  font-family: IBM Plex Sans;
+  font-size: 16px!important;
+  font-weight: 500;
+  line-height: 100%; /* 16px */
 }
 
 .balances {
@@ -431,8 +477,15 @@
 .largeInput {
   font-size: 42px !important;
   z-index: 99;
+  
 }
-
+.largeInput input{
+  text-align: end!important;
+  color: #E3E4E7;
+  font-family: IBM Plex Sans;
+  font-size: 32px;
+  font-weight: 400;
+}
 .someContainer {
   display: grid;
   grid-template-columns: 1fr;
@@ -442,33 +495,44 @@
 .titleSection {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background: none;
-  border: 1px solid #212B48;
-  border-radius: 10px;
-  width: calc(100% - 0px);
-  margin: 0px 0px 15px 0px;
   position: relative;
   min-height: 60px;
 }
 
 .backButton {
-  position: absolute !important;
-  left: 5px !important;
-  top: 5px;
+  margin: 0;
+  padding: 0!important;
 }
 
 .backIcon {
-  color: #06D3D7 !important;
+  color: var(--diffuse-white-icon)!important;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .titleText {
-  font-size: 18px !important;
-  letter-spacing: normal !important;
   font-weight: bold !important;
+
+  color: var(--diffuse-white-text);
+  font-family: JetBrains Mono!important;
+  font-size: 16px!important;
+  font-weight: 500!important;
+  letter-spacing: -0.16px;
+  text-transform: uppercase;
+
 }
 
 .vestInfoContainer {
+  
+}
+.vestVotingPower {
+  padding: 30px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .vestInfoContainer > .title {
@@ -499,13 +563,62 @@
   padding: 3px 0px
 }
 
-.vestInfoContainer > .seccondSection {
+.seccondSection {
+  display: grid;
+  grid-template-columns: 120px repeat(4,1fr);
+  gap: 1px;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  /* Mobile layout */
+  .seccondSection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .info{
+    order: 12;
+  }
+  .info:nth-child(1) {
+    order: 1;
+  }
+  .info:nth-child(2) {
+    order: 3;
+  }
+  .info:nth-child(3) {
+    order: 5;
+  }
+  .info:nth-child(4) {
+    order: 7;
+  }
+  .info:nth-child(5) {
+    order: 9;
+  }
+
+  .info:nth-child(6) {
+    order: 2;
+  }
+  .info:nth-child(7) {
+    order: 4;
+  }
+  .info:nth-child(8) {
+    order: 6;
+  }
+  .info:nth-child(9) {
+    order: 8;
+  }
+  .info:nth-child(10) {
+    order: 10;
+  }
 }
 
 .vestInfoContainer > .seccondSection > .info {
-  font-size: 12px !important;
-  font-style: italic;
-  padding: 3px 0px !important
+  color: #7E818D;
+  font-family: IBM Plex Sans;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%; /* 13px */
 }
 
 

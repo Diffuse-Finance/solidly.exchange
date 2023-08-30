@@ -121,7 +121,7 @@ export default function ssLock({ govToken, veToken }) {
     return (
       <div className={ classes.textField}>
         <div className={ `${classes.massiveInputContainer} ${ (amountError) && classes.error }` }>
-          <div className={ classes.massiveInputAssetSelect }>
+          {/* <div className={ classes.massiveInputAssetSelect }>
             <div className={ classes.displaySelectContainer }>
               <div className={ classes.assetSelectMenuItem }>
                 <div className={ classes.displayDualIconContainer }>
@@ -131,7 +131,7 @@ export default function ssLock({ govToken, veToken }) {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className={ classes.massiveInputAmount }>
             <TextField
               inputRef={inputEl}
@@ -163,14 +163,9 @@ export default function ssLock({ govToken, veToken }) {
     return (
       <div className={ classes.textField}>
         <div className={ classes.inputTitleContainer }>
-          <div className={ classes.inputBalance }>
-            <Typography className={ classes.inputBalanceText } noWrap onClick={ () => {
-              setAmountPercent(100)
-            }}>
-              Balance: { (token && token.balance) ? ' ' + formatCurrency(token.balance) : '' }
-            </Typography>
-          </div>
+          
         </div>
+        <div>
         <div className={ `${classes.massiveInputContainer} ${ (amountError) && classes.error }` }>
           <div className={ classes.massiveInputAssetSelect }>
             <div className={ classes.displaySelectContainer }>
@@ -196,8 +191,11 @@ export default function ssLock({ govToken, veToken }) {
                       onError={(e)=>{e.target.onerror = null; e.target.src="/tokens/unknown-logo.png"}}
                     />
                   }
-                </div>
+                  <Typography color='textSecondary' className={ classes.smallerText }>{ token?.symbol }</Typography>
+
+                </div>           
               </div>
+            
             </div>
           </div>
           <div className={ classes.massiveInputAmount }>
@@ -213,24 +211,33 @@ export default function ssLock({ govToken, veToken }) {
                 className: classes.largeInput
               }}
             />
-            <Typography color='textSecondary' className={ classes.smallerText }>{ token?.symbol }</Typography>
           </div>
+          </div>
+        <Typography className={ classes.inputBalanceText } onClick={ () => {
+                  setAmountPercent(100)
+                }}>
+                  You have { (token && token.balance) ? ' ' + formatCurrency(token.balance) : '' }
+        </Typography> 
         </div>
       </div>
     )
   }
 
+  const getTmpNFT = () => {
+      const now = moment()
+      const expiry = moment(selectedDate)
+      const dayToExpire = expiry.diff(now, 'days')
+    
+      const tmpNFT = {
+        lockAmount: amount,
+        lockValue: BigNumber(amount).times(parseInt(dayToExpire)+1).div(1460).toFixed(18),
+        lockEnds: expiry.unix()
+      }
+      return tmpNFT
+  }
   const renderVestInformation = () => {
-    const now = moment()
-    const expiry = moment(selectedDate)
-    const dayToExpire = expiry.diff(now, 'days')
 
-    const tmpNFT = {
-      lockAmount: amount,
-      lockValue: BigNumber(amount).times(parseInt(dayToExpire)+1).div(1460).toFixed(18),
-      lockEnds: expiry.unix()
-    }
-
+    const tmpNFT = getTmpNFT()
     return (<VestingInfo futureNFT={tmpNFT} govToken={govToken} veToken={veToken} showVestingStructure={ true } />)
   }
 
@@ -240,29 +247,38 @@ export default function ssLock({ govToken, veToken }) {
 
   return (
     <>
-      <Paper elevation={0} className={ classes.container3 }>
-        <div className={ classes.titleSection }>
-        <Tooltip title="Back to Vest" placement="top">
-          <IconButton className={ classes.backButton } onClick={ onBack }>
-            <ArrowBackIcon className={ classes.backIcon } />
-          </IconButton>
-          </Tooltip>
-          <Typography className={ classes.titleText }>Create New Lock</Typography>
+      <Paper elevation={0} className={ classes.paperContainer }>
+        <div className={ classes.container3 }>
+            <div className={ classes.titleSection }>
+            <Tooltip title="Back to Vest" placement="top">
+              <IconButton className={ classes.backButton } onClick={ onBack }>
+                <ArrowBackIcon className={ classes.backIcon } />
+              </IconButton>
+              </Tooltip>
+              <Typography className={ classes.titleText }>Create New Lock</Typography>
+            </div>
+            { renderMassiveInput('amount', amount, amountError, onAmountChanged, govToken) }
+            <div>
+              <div className={ classes.inline }>
+                <Typography className={ classes.expiresIn }>Expires: </Typography>
+                <RadioGroup className={classes.vestPeriodToggle} row onChange={handleChange} value={selectedValue}>
+                  <FormControlLabel className={ `${classes.vestPeriodLabel} ${selectedValue === "week" ? classes.vestPeriodLabelActive : ''}` } value="week" control={<Radio  style={{display:'none'}} color="primary" />} label="1 week" labelPlacement="left" />
+                  <FormControlLabel className={ `${classes.vestPeriodLabel} ${selectedValue === "month" ? classes.vestPeriodLabelActive : ''}` } value="month" control={<Radio  style={{display:'none'}} color="primary" />} label="1 month" labelPlacement="left" />
+                  <FormControlLabel className={ `${classes.vestPeriodLabel} ${selectedValue === "year" ? classes.vestPeriodLabelActive : ''}` } value="year" control={<Radio  style={{display:'none'}} color="primary" />} label="1 year" labelPlacement="left" />
+                  <FormControlLabel className={ `${classes.vestPeriodLabel} ${selectedValue === "years" ? classes.vestPeriodLabelActive : ''}` } value="years" control={<Radio  style={{display:'none'}} color="primary" />} label="4 years" labelPlacement="left" />
+                  {/* <FormControlLabel className={ `${classes.vestPeriodLabel}`} onClick = {() => { console.log("asdsadas")}} control={<></>} label="PICK A DATE" labelPlacement="left" /> */}
+                </RadioGroup>
+              </div>
+              <div className={classes.dateContainer}>
+                <div className={ classes.inlineDate }>
+                  <Typography className={ classes.expiresIn }>Locked until: </Typography>
+                  { renderMassiveDateInput('date', selectedDate, selectedDateError, handleDateChange, govToken?.balance, govToken?.logoURI) }
+                </div>
+                <Typography color='textSecondary' align='right' className={ classes.inputBalanceText }>{ formatCurrency(getTmpNFT().lockAmount) } { govToken?.symbol } locked expires { moment.unix(getTmpNFT()?.lockEnds).fromNow() } </Typography>
+              </div>
+            </div>
+            { renderVestInformation() }
         </div>
-        { renderMassiveInput('amount', amount, amountError, onAmountChanged, govToken) }
-        <div>
-          { renderMassiveDateInput('date', selectedDate, selectedDateError, handleDateChange, govToken?.balance, govToken?.logoURI) }
-          <div className={ classes.inline }>
-            <Typography className={ classes.expiresIn }>Expires: </Typography>
-            <RadioGroup className={classes.vestPeriodToggle} row onChange={handleChange} value={selectedValue}>
-              <FormControlLabel className={ classes.vestPeriodLabel } value="week" control={<Radio color="primary" />} label="1 week" labelPlacement="left" />
-              <FormControlLabel className={ classes.vestPeriodLabel } value="month" control={<Radio color="primary" />} label="1 month" labelPlacement="left" />
-              <FormControlLabel className={ classes.vestPeriodLabel } value="year" control={<Radio color="primary" />} label="1 year" labelPlacement="left" />
-              <FormControlLabel className={ classes.vestPeriodLabel } value="years" control={<Radio color="primary" />} label="4 years" labelPlacement="left" />
-            </RadioGroup>
-          </div>
-        </div>
-        { renderVestInformation() }
         <div className={ classes.actionsContainer }>
           <Button
             className={classes.buttonOverride}
