@@ -14,6 +14,9 @@ import axios from 'axios';
 
 import BigNumber from "bignumber.js"
 
+import stableSwapAssetsFromLocal from '../stores/configurations/stableSwapAssets'
+import stableSwapRouteAssetsFromLocal from '../stores/configurations/stableSwapRouteAssets'
+
 class Store {
   constructor(dispatcher, emitter) {
     this.dispatcher = dispatcher
@@ -35,6 +38,7 @@ class Store {
 
     dispatcher.register(
       function (payload) {
+        console.log("REGISTER ,",payload)
         switch (payload.type) {
           case ACTIONS.CONFIGURE_SS:
             this.configure(payload)
@@ -734,8 +738,10 @@ class Store {
     try {
       this.setStore({ govToken: this._getGovTokenBase() })
       this.setStore({ veToken: this._getVeTokenBase() })
-      this.setStore({ baseAssets: await this._getBaseAssets() })
-      this.setStore({ routeAssets: await this._getRouteAssets() })
+      // this.setStore({ baseAssets: await this._getBaseAssets() })
+      this.setStore({ baseAssets: stableSwapAssetsFromLocal })
+      // this.setStore({ routeAssets: await this._getRouteAssets() })
+      this.setStore({ routeAssets: stableSwapRouteAssetsFromLocal })
       this.setStore({ pairs: await this._getPairs() })
 
       this.emitter.emit(ACTIONS.UPDATED)
@@ -799,7 +805,6 @@ class Store {
   }
 
   _getPairs = async () => {
-    console.log('aaaaaGetting pairs')
     try {
       const response = await axios.get(`https://edgeapi.diffuse.finance/static/pairs/421613`, {
       	method: 'get',
