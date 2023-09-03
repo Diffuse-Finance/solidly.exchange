@@ -308,7 +308,7 @@
 }
 
 .buttonOverride:hover {
-  background: rgb(255, 255, 255, 0.7) !important;
+  background: var(--diffuse-violet-hover) !important;
 }
 
 
@@ -383,13 +383,14 @@
   padding: 10px;
   align-items: center;
   gap: 10px; 
+  min-width: 130px;
 }
 
 .displayAssetIcon {
-  border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 50px;
-  width: 24px;
-  height: 24px;
+  width: 31px;
+  height: 31px;
+  
 }
 
 .activeDot {
@@ -621,8 +622,8 @@
 }
 
 .assetSelectMenu {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -635,10 +636,11 @@
 }
 
 .displayAssetIconSmall {
-  border: 1px solid rgba(126, 153, 153, 0.5);
+  background-color: rgb(236, 236, 236);
   border-radius: 30px;
-  background: rgb(33, 43, 72);
-  padding: 6px;
+  padding: 4px;
+  height: 50px;
+  width: 50px;
 }
 
 .manageLocalContainer {
@@ -656,9 +658,13 @@
 }
 
 .searchContainer {
-  padding: 24px;
+  padding: 24px 0;
   height: 600px;
   overflow-y: scroll;
+}
+
+.searchInline{
+  padding: 0 24px;
 }
 
 .assetSearchResults {

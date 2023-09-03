@@ -90,9 +90,13 @@
 }
 
 .searchContainer {
-  padding: 24px;
+  padding: 24px 0;
   height: 600px;
   overflow-y: scroll;
+}
+
+.searchInline{
+  padding: 0 24px;
 }
 
 .assetSearchResults {
@@ -268,13 +272,16 @@
 }
 
 .buttonOverride {
-  background: rgb(23, 52, 72) !important;
-  color: rgb(6, 211, 215) !important;
+  background: #A89FCA !important;
+  color: #0F1011 !important;
   font-weight: 700 !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  padding: 30px!important;
 }
 
 .buttonOverride:hover {
-  background: rgb(19, 44, 60) !important;
+  background: var(--diffuse-violet-hover) !important;
 }
 
 
@@ -334,10 +341,11 @@
 }
 
 .displayAssetIconSmall {
-  border: 1px solid rgba(126, 153, 153, 0.5);
+  background-color: rgb(236, 236, 236);
   border-radius: 30px;
-  background: rgb(33, 43, 72);
-  padding: 6px;
+  padding: 4px;
+  height: 50px;
+  width: 50px;
 }
 
 .displaySelectContainer {
@@ -496,8 +504,8 @@
 }
 
 .assetSelectMenu {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
