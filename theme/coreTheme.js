@@ -130,6 +130,13 @@ const coreTheme = {
       root: {
         minWidth: "50px"
       },
+      outlinedPrimary:{
+        borderRadius: '22px',
+        backgroundColor:'rgba(168, 159, 202, 0.15)',
+        border:'1px solid transparent',
+        fontFamily:'JetBrains Mono, monospace',
+        textTransform:'uppercase!important'
+      },
       outlinedSizeSmall: {
         fontSize: "0.7rem",
         padding: "6px 9px",
