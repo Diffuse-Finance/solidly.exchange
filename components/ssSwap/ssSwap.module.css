@@ -97,7 +97,6 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  width: 80px;
   gap: 5px;
 }
 
@@ -114,9 +113,7 @@
 }
 
 .displayDualIconContainerSmall {
-  width: 60px;
   position: relative;
-  margin-right: 12px;
 }
 
 .displaySelect {
@@ -165,11 +162,11 @@
 }
 
 .displayAssetIconSmall {
-  border: 1px solid rgb(211, 211, 211);
-  border-radius: 30px;
+  background-color: #fff;
+  border-radius: 50px;
   padding: 6px;
-  height: 30px;
-  width: 30px;
+  height: 38px;
+  width: 38px;
 }
 
 .displayChainIcon {
@@ -383,6 +380,8 @@
 .assetSelectMenu {
   padding-left: 24px !important;
   padding-right: 24px !important;
+  padding-top: 7px!important;
+  padding-bottom: 7px!important;
   display: flex;
   justify-content: space-between;
   align-items: center;

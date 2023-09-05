@@ -300,7 +300,7 @@ const EnhancedTableToolbar = (props) => {
         value={search}
         onChange={onSearchChanged}
         InputProps={{
-          startAdornment: (
+          endAdornment: (
             <InputAdornment position="start">
               <SearchIcon />
             </InputAdornment>

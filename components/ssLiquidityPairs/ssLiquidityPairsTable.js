@@ -582,7 +582,7 @@ const EnhancedTableToolbar = (props) => {
               classes: {
                 adornedStart: classes.adornedStart,
               },
-              startAdornment: (
+              endAdornment: (
                 <InputAdornment position="start">
                   <SearchIcon className={classes.searchIcon} />
                 </InputAdornment>

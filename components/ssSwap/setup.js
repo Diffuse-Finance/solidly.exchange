@@ -9,17 +9,14 @@ import {
   Dialog,
   CircularProgress,
   SvgIcon,
-  Tooltip
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import ToggleButton from '@material-ui/lab/ToggleButton';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import { withTheme } from '@material-ui/core/styles';
 
-import { formatCurrency, formatAddress, formatCurrencyWithSymbol, formatCurrencySmall } from '../../utils'
+import { formatCurrency } from '../../utils'
 
 import classes from './ssSwap.module.css'
 
@@ -28,7 +25,11 @@ import {
   ACTIONS,
   ETHERSCAN_URL
 } from '../../stores/constants'
+
 import BigNumber from 'bignumber.js'
+
+import OptionsMenu from '../OptionsMenu'
+import ManageLocal from '../ManageLocal'
 
 function Setup() {
 
@@ -244,8 +245,10 @@ function Setup() {
   }
 
   const setBalance100 = () => {
-    setFromAmountValue(fromAssetValue.balance)
-    calculateReceiveAmount(fromAssetValue.balance, fromAssetValue, toAssetValue)
+    if(fromAssetValue && toAssetValue){
+      setFromAmountValue(fromAssetValue.balance)
+      calculateReceiveAmount(fromAssetValue.balance, fromAssetValue, toAssetValue)
+    }
   }
 
   const swapAssets = () => {
@@ -382,8 +385,8 @@ function Setup() {
 
     return (
       <div className={ classes.textField}>
-          <div className={ classes.inputTitleContainer }>
-            {/* <div className={ classes.inputBalance }>
+        {/* <div className={ classes.inputTitleContainer }>
+            <div className={ classes.inputBalance }>
               <Typography className={ classes.inputBalanceText } noWrap onClick={ () => {
                 if(type === 'From') {
                   setBalance100()
@@ -395,9 +398,9 @@ function Setup() {
                   ''
                 }
               </Typography>
-            </div> */}
-          </div>
-          <div className={ `${classes.massiveInputContainer} ${ (amountError || assetError) && classes.error }` }>
+            </div>
+          </div> */}
+          <div className={ `${classes.massiveInputContainer}` }>
               <div className={ classes.inputContainer } >
                   <div className={ classes.massiveInputAmount }>
                     <TextField
@@ -419,7 +422,7 @@ function Setup() {
 
                   <div className={classes.inputsButtons} >
                     <div>
-                        <div className={classes.buttonGreyMax}>
+                        <div onClick={()=>setBalance100() } className={classes.buttonGreyMax}>
                           <p className={classes.max}>MAX</p>
                         </div>
                     </div>
@@ -432,7 +435,12 @@ function Setup() {
               </div>
               <div className={ classes.balanceInput }>
                 <p className={ classes.smallerText}>$100.34</p>
-                <p className={ classes.smallerText}>You have 76.18 ETH</p>
+                <p className={ classes.smallerText}>You have { (assetValue && assetValue.balance) ?
+                  ' ' +   formatCurrency(assetValue.balance) :
+                  ''
+                } {assetValue?.symbol}
+                </p>
+                
               </div>
           </div>
       </div>
@@ -563,32 +571,6 @@ function AssetSelect({ type, value, assetOptions, onSelect }) {
     )
   }
 
-  const renderAssetOption = (type, asset, idx) => {
-    return (
-      <MenuItem val={ asset.address } key={ asset.address+'_'+idx } className={ classes.assetSelectMenu } onClick={ () => { onLocalSelect(type, asset) } }>
-        <div className={ classes.assetSelectMenuItem }>
-          <div className={ classes.displayDualIconContainerSmall }>
-            <img
-              className={ classes.displayAssetIconSmall }
-              alt=""
-              src={ asset ? `${asset.logoURI}` : '' }
-              height='60px'
-              onError={(e)=>{e.target.onerror = null; e.target.src="/tokens/unknown-logo.png"}}
-            />
-          </div>
-        </div>
-        <div className={ classes.assetSelectIconName }>
-          <Typography variant='h5'>{ asset ? asset.symbol : '' }</Typography>
-          <Typography variant='subtitle1' color='textSecondary'>{ asset ? asset.name : '' }</Typography>
-        </div>
-        <div className={ classes.assetSelectBalance}>
-          <Typography variant='h5'>{ (asset && asset.balance) ? formatCurrency(asset.balance) : '0.00' }</Typography>
-          <Typography variant='subtitle1' color='textSecondary'>{ 'Balance' }</Typography>
-        </div>
-      </MenuItem>
-    )
-  }
-
   const renderManageLocal = () => {
     return (
       <>
@@ -602,7 +584,7 @@ function AssetSelect({ type, value, assetOptions, onSelect }) {
               value={ search }
               onChange={ onSearchChanged }
               InputProps={{
-                startAdornment: <InputAdornment position="start">
+                endAdornment: <InputAdornment position="start">
                   <SearchIcon />
                 </InputAdornment>,
               }}
@@ -629,50 +611,6 @@ function AssetSelect({ type, value, assetOptions, onSelect }) {
     )
   }
 
-  const renderOptions = () => {
-    return (
-      <>
-        <div className={ classes.searchContainer }>
-          <div className={ classes.searchInline }>
-            <TextField
-              autoFocus
-              variant="outlined"
-              fullWidth
-              placeholder="FTM, MIM, 0x..."
-              value={ search }
-              onChange={ onSearchChanged }
-              InputProps={{
-                startAdornment: <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>,
-              }}
-            />
-          </div>
-          <div className={ classes.assetSearchResults }>
-            {
-              filteredAssetOptions ? filteredAssetOptions.sort((a, b) => {
-                if(BigNumber(a.balance).lt(b.balance)) return 1;
-                if(BigNumber(a.balance).gt(b.balance)) return -1;
-                if(a.symbol.toLowerCase()<b.symbol.toLowerCase()) return -1;
-                if(a.symbol.toLowerCase()>b.symbol.toLowerCase()) return 1;
-                return 0;
-              }).map((asset, idx) => {
-                return renderAssetOption(type, asset, idx)
-              }) : []
-            }
-          </div>
-        </div>
-        <div className={ classes.manageLocalContainer }>
-          <Button
-            onClick={ toggleLocal }
-            >
-            Manage Local Assets
-          </Button>
-        </div>
-      </>
-    )
-  }
-
   return (
     <React.Fragment>
       <div className={ classes.displaySelectContainer } onClick={ () => { openSearch() } }>
@@ -681,12 +619,12 @@ function AssetSelect({ type, value, assetOptions, onSelect }) {
               alt=""
               src={ value ? `${value.logoURI}` : '' }
               onError={(e)=>{e.target.onerror = null; e.target.src="/tokens/unknown-logo.png"}}
-            />
-            <p className={classes.max}>WETH</p>
+              />
+            <p className={classes.max}>{value ? value?.symbol : ''}</p>
       </div>
       <Dialog onClose={ onClose } aria-labelledby="simple-dialog-title" open={ open } >
-        { !manageLocal && renderOptions() }
-        { manageLocal && renderManageLocal() }
+        { !manageLocal && <OptionsMenu onLocalSelect = { onLocalSelect } type={type}  search= { search }  onSearchChanged= { onSearchChanged } filteredAssetOptions= { filteredAssetOptions }  toggleLocal= { toggleLocal } /> }
+        {  manageLocal && <ManageLocal onLocalSelect = { onLocalSelect } type={type}  search= { search }  onSearchChanged= { onSearchChanged } filteredAssetOptions= { filteredAssetOptions }  toggleLocal= { toggleLocal } /> }
       </Dialog>
     </React.Fragment>
   )

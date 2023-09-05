@@ -338,14 +338,6 @@
   border-top: 1px solid rgba(128, 128, 128, 0.5);
 }
 
-.displayAssetIconSmall {
-  background-color: rgb(236, 236, 236);
-  border-radius: 30px;
-  padding: 4px;
-  height: 50px;
-  width: 50px;
-}
-
 .displaySelectContainer {
   padding: 12px;
   min-height: 100px;
@@ -360,12 +352,6 @@
   width: 100px;
   position: relative;
   margin: 0 auto;
-}
-
-.displayDualIconContainerSmall {
-  width: 60px;
-  position: relative;
-  margin-right: 12px;
 }
 
 .displayAssetIcon {
@@ -527,21 +513,7 @@
   font-size: 14px !important;
 }
 
-.assetSelectBalance {
-  flex: 1;
-  margin-left: 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
 
-.assetSelectMenu {
-  padding-left: 24px !important;
-  padding-right: 24px !important;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .titleSection {
   display: flex;

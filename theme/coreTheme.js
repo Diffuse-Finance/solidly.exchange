@@ -198,6 +198,9 @@ const coreTheme = {
         }
       }
     },
+    MuiPaper:{
+      borderRadius:'27px'
+    },
     MuiAccordionSummary: {
       root: {
         padding: "0px 24px",
@@ -222,6 +225,12 @@ const coreTheme = {
         padding: "12px 24px",
         borderBottom: "none"
       }
+    },
+    MuiOutlinedInput:{
+      root:{
+        borderRadius:'22px',
+        fontFamily:'JetBrains Mono, monospace',
+      },
     },
     MuiInput: {
       underline: {

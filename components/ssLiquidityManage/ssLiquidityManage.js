@@ -16,6 +16,9 @@ import {
   CONTRACTS
 } from '../../stores/constants';
 
+import OptionsMenu from '../OptionsMenu'
+import ManageLocal from '../ManageLocal'
+
 export default function ssLiquidityManage() {
 
   const router = useRouter();
@@ -1439,32 +1442,6 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
     )
   }
 
-  const renderAssetOption = (type, asset, idx) => {
-    return (
-      <MenuItem val={ asset.address } key={ asset.address+'_'+idx } className={ classes.assetSelectMenu } onClick={ () => { onLocalSelect(type, asset) } }>
-        <div className={ classes.assetSelectMenuItem }>
-          <div className={ classes.displayDualIconContainerSmall }>
-            <img
-              className={ classes.displayAssetIconSmall }
-              alt=""
-              src={ asset ? `${asset.logoURI}` : '' }
-              height='60px'
-              onError={(e)=>{e.target.onerror = null; e.target.src="/tokens/unknown-logo.png"}}
-            />
-          </div>
-        </div>
-        <div className={ classes.assetSelectIconName }>
-          <Typography variant='h5'>{ asset ? asset.symbol : '' }</Typography>
-          <Typography variant='subtitle1' color='textSecondary'>{ asset ? asset.name : '' }</Typography>
-        </div>
-        <div className={ classes.assetSelectBalance}>
-          <Typography variant='h5'>{ (asset && asset.balance) ? formatCurrency(asset.balance) : '0.00' }</Typography>
-          <Typography variant='subtitle1' color='textSecondary'>{ 'Balance' }</Typography>
-        </div>
-      </MenuItem>
-    )
-  }
-
   const renderManageLocal = () => {
     return (
       <>
@@ -1478,7 +1455,7 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
               value={ search }
               onChange={ onSearchChanged }
               InputProps={{
-                startAdornment: <InputAdornment position="start">
+                endAdornment: <InputAdornment position="start">
                   <SearchIcon />
                 </InputAdornment>,
               }}
@@ -1505,50 +1482,6 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
     )
   }
 
-  const renderOptions = () => {
-    return (
-      <>
-        <div className={ classes.searchContainer }>
-          <div className={ classes.searchInline }>
-            <TextField
-              autoFocus
-              variant="outlined"
-              fullWidth
-              placeholder="FTM, MIM, 0x..."
-              value={ search }
-              onChange={ onSearchChanged }
-              InputProps={{
-                startAdornment: <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>,
-              }}
-            />
-          </div>
-          <div className={ classes.assetSearchResults }>
-            {
-              filteredAssetOptions ? filteredAssetOptions.sort((a, b) => {
-                if(BigNumber(a.balance).lt(b.balance)) return 1;
-                if(BigNumber(a.balance).gt(b.balance)) return -1;
-                if(a.symbol.toLowerCase()<b.symbol.toLowerCase()) return -1;
-                if(a.symbol.toLowerCase()>b.symbol.toLowerCase()) return 1;
-                return 0;
-              }).map((asset, idx) => {
-                return renderAssetOption(type, asset, idx)
-              }) : []
-            }
-          </div>
-        </div>
-        <div className={ classes.manageLocalContainer }>
-          <Button
-            onClick={ toggleLocal }
-            >
-            Manage Local Assets
-          </Button>
-        </div>
-      </>
-    )
-  }
-
   return (
     <React.Fragment>
       <div className={ classes.displaySelectContainer } onClick={ () => { openSearch() } }>
@@ -1566,8 +1499,9 @@ function AssetSelect({ type, value, assetOptions, onSelect, disabled }) {
         </div>
       </div>
       <Dialog onClose={ onClose } aria-labelledby="simple-dialog-title" open={ open } >
-        { !manageLocal && renderOptions() }
-        { manageLocal && renderManageLocal() }
+        { !manageLocal && <OptionsMenu onLocalSelect = { onLocalSelect } type={type} search= { search }  onSearchChanged= { onSearchChanged } filteredAssetOptions= { filteredAssetOptions }  toggleLocal= { toggleLocal } /> }
+        {  manageLocal && <ManageLocal onLocalSelect = { onLocalSelect } type={type}  search= { search }  onSearchChanged= { onSearchChanged } filteredAssetOptions= { filteredAssetOptions }  toggleLocal= { toggleLocal } /> }
+
       </Dialog>
     </React.Fragment>
   )

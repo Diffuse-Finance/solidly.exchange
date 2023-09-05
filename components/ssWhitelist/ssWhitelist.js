@@ -207,7 +207,7 @@ export default function ssWhitelist() {
           value={search}
           onChange={onSearchChanged}
           InputProps={{
-            startAdornment: (
+            endAdornment: (
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
